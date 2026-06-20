@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fitland-AI — The country that fits you.</title>
+<style>
+  :root {
+    --navy: #1B2A4A;
+    --navy-deep: #11192E;
+    --accent: #2E75B6;
+    --accent-light: #5B9BD5;
+    --bg: #FBFCFE;
+    --bg-soft: #EAF1F8;
+    --grey: #5B6478;
+    --grey-light: #8893A8;
+    --white: #FFFFFF;
+    --serif: 'Source Serif Pro', Georgia, 'Times New Roman', serif;
+    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    color: var(--navy);
+    background: var(--bg);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  img, svg { display: block; max-width: 100%; }
+
+  .wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ---------- Focus visibility ---------- */
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  /* ---------- Nav ---------- */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(251, 252, 254, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(27, 42, 74, 0.08);
+  }
+
+  nav {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: -0.01em;
+  }
+
+  .brand-mark {
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+  }
+
+  .brand-mark svg { width: 100%; height: 100%; }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    font-size: 0.92rem;
+    color: var(--grey);
+  }
+
+  .nav-links a:hover { color: var(--navy); }
+
+  .nav-cta {
+    background: var(--navy);
+    color: var(--white) !important;
+    padding: 9px 18px;
+    border-radius: 7px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: background 0.15s ease;
+  }
+
+  .nav-cta:hover { background: var(--accent); }
+
+  @media (max-width: 760px) {
+    .nav-links { display: none; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding: 96px 0 84px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: -120px;
+    right: -180px;
+    width: 520px;
+    height: 520px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(46,117,182,0.10) 0%, rgba(46,117,182,0) 70%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  @media (max-width: 880px) {
+    .hero-inner { grid-template-columns: 1fr; }
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 16px;
+    height: 1.5px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(2.4rem, 4.6vw, 3.6rem);
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    margin-bottom: 22px;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--grey);
+    max-width: 46ch;
+    margin-bottom: 34px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 24px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.15s ease;
+  }
+
+  .btn:hover { transform: translateY(-1px); }
+
+  .btn-primary {
+    background: var(--navy);
+    color: var(--white);
+    box-shadow: 0 1px 2px rgba(27,42,74,0.15);
+  }
+
+  .btn-primary:hover { background: var(--accent); box-shadow: 0 6px 16px rgba(46,117,182,0.28); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--navy);
+    border-color: rgba(27,42,74,0.2);
+  }
+
+  .btn-ghost:hover { border-color: var(--navy); }
+
+  /* ---------- Hero visual: rotating criteria ring ---------- */
+  .hero-visual {
+    position: relative;
+    aspect-ratio: 1;
+    max-width: 380px;
+    margin: 0 auto;
+  }
+
+  .ring-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 18px 38px rgba(27,42,74,0.28);
+    z-index: 2;
+  }
+
+  .ring-center svg { width: 46px; height: 46px; }
+
+  .crit-node {
+    position: absolute;
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 1.5px solid rgba(27,42,74,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    font-size: 0.62rem;
+    font-weight: 600;
+    color: var(--navy);
+    padding: 6px;
+    box-shadow: 0 6px 18px rgba(27,42,74,0.07);
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .crit-node .ico { font-size: 1.2rem; margin-bottom: 2px; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-7px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .crit-node { animation: none; }
+  }
+
+  .n1 { top: 0; left: 50%; transform: translateX(-50%); animation-delay: 0s; }
+  .n2 { top: 14%; right: 0; animation-delay: 0.6s; }
+  .n3 { bottom: 14%; right: 4%; animation-delay: 1.2s; }
+  .n4 { bottom: 0; left: 50%; transform: translateX(-50%); animation-delay: 1.8s; }
+  .n5 { bottom: 14%; left: 4%; animation-delay: 2.4s; }
+  .n6 { top: 14%; left: 0; animation-delay: 3s; }
+
+  @media (max-width: 880px) {
+    .hero-visual { max-width: 300px; }
+    .crit-node { width: 68px; height: 68px; font-size: 0.56rem; }
+    .ring-center { width: 100px; height: 100px; }
+    .ring-center svg { width: 36px; height: 36px; }
+  }
+
+  /* ---------- Section shared ---------- */
+  section { padding: 88px 0; }
+
+  .section-head {
+    max-width: 56ch;
+    margin-bottom: 52px;
+  }
+
+  .section-head .eyebrow { margin-bottom: 14px; }
+
+  h2 {
+    font-family: var(--serif);
+    font-size: clamp(1.7rem, 3vw, 2.3rem);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 14px;
+  }
+
+  .section-head p {
+    color: var(--grey);
+    font-size: 1.02rem;
+  }
+
+  .alt-bg { background: var(--bg-soft); }
+
+  /* ---------- How it works ---------- */
+  .flow {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    position: relative;
+  }
+
+  @media (max-width: 760px) {
+    .flow { grid-template-columns: 1fr; gap: 36px; }
+  }
+
+  .flow-step {
+    position: relative;
+    padding-right: 36px;
+  }
+
+  .flow-step:not(:last-child)::after {
+    content: "→";
+    position: absolute;
+    top: 22px;
+    right: -4px;
+    color: var(--accent-light);
+    font-size: 1.3rem;
+  }
+
+  @media (max-width: 760px) {
+    .flow-step:not(:last-child)::after { content: "↓"; right: auto; left: 22px; top: auto; bottom: -30px; }
+    .flow-step { padding-right: 0; }
+  }
+
+  .flow-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .flow-step h3 {
+    font-size: 1.18rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .flow-step p {
+    color: var(--grey);
+    font-size: 0.94rem;
+  }
+
+  /* ---------- Criteria grid ---------- */
+  .crit-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+  }
+
+  @media (max-width: 880px) {
+    .crit-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  @media (max-width: 560px) {
+    .crit-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .crit-card {
+    background: var(--white);
+    border: 1px solid rgba(27,42,74,0.08);
+    border-radius: 12px;
+    padding: 20px 14px;
+    text-align: center;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+
+  .crit-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .crit-card .ico { font-size: 1.5rem; margin-bottom: 10px; }
+
+  .crit-card .label {
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  /* ---------- Questionnaire demo ---------- */
+  .demo-shell {
+    background: var(--navy);
+    border-radius: 20px;
+    padding: 48px;
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+  }
+
+  @media (max-width: 640px) {
+    .demo-shell { padding: 32px 22px; }
+  }
+
+  .demo-shell::before {
+    content: "";
+    position: absolute;
+    bottom: -140px;
+    left: -100px;
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(46,117,182,0.22) 0%, rgba(46,117,182,0) 70%);
+  }
+
+  .demo-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+    position: relative;
+  }
+
+  .demo-head h2 { color: var(--white); margin-bottom: 0; }
+
+  .demo-progress {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.55);
+    font-weight: 600;
+  }
+
+  .demo-sub {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.95rem;
+    margin-bottom: 34px;
+    position: relative;
+  }
+
+  .q-panel { position: relative; min-height: 260px; }
+
+  .q-step { display: none; }
+  .q-step.active { display: block; animation: fadein 0.25s ease; }
+
+  @keyframes fadein {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 24px;
+    font-family: var(--serif);
+  }
+
+  .opt-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  @media (max-width: 560px) {
+    .opt-grid { grid-template-columns: 1fr; }
+  }
+
+  .opt {
+    background: rgba(255,255,255,0.05);
+    border: 1.5px solid rgba(255,255,255,0.14);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 0.92rem;
+    color: var(--white);
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 0.12s ease, background 0.12s ease;
+  }
+
+  .opt:hover { border-color: rgba(255,255,255,0.4); }
+
+  .opt.selected {
+    border-color: var(--accent-light);
+    background: rgba(46,117,182,0.28);
+  }
+
+  .q-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .q-nav .btn-ghost {
+    color: var(--white);
+    border-color: rgba(255,255,255,0.25);
+  }
+
+  .q-nav .btn-ghost:hover { border-color: var(--white); }
+
+  .q-nav .btn-primary:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .q-dots {
+    display: flex;
+    gap: 6px;
+  }
+
+  .q-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+  }
+
+  .q-dot.done { background: var(--accent-light); }
+
+  /* ---------- Results ---------- */
+  .results-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .result-row {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .result-rank {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--accent-light);
+    width: 24px;
+  }
+
+  .result-body { flex: 1; }
+
+  .result-country {
+    font-weight: 700;
+    font-size: 1.02rem;
+    margin-bottom: 3px;
+  }
+
+  .result-why {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.55);
+  }
+
+  .result-bar-track {
+    width: 90px;
+    height: 5px;
+    border-radius: 3px;
+    background: rgba(255,255,255,0.12);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .result-bar-fill {
+    height: 100%;
+    background: var(--accent-light);
+    border-radius: 3px;
+    width: 0%;
+    transition: width 0.7s ease;
+  }
+
+  .demo-disclaimer {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.4);
+    margin-top: 18px;
+  }
+
+  /* ---------- Email capture ---------- */
+  .capture {
+    text-align: center;
+  }
+
+  .capture-form {
+    display: flex;
+    gap: 10px;
+    max-width: 420px;
+    margin: 26px auto 0;
+  }
+
+  @media (max-width: 480px) {
+    .capture-form { flex-direction: column; }
+  }
+
+  .capture-form input[type="email"] {
+    flex: 1;
+    padding: 13px 16px;
+    border-radius: 8px;
+    border: 1.5px solid rgba(27,42,74,0.18);
+    font-size: 0.95rem;
+    font-family: var(--sans);
+    background: var(--white);
+  }
+
+  .capture-form input[type="email"]:focus {
+    border-color: var(--accent);
+    outline: none;
+  }
+
+  .capture-note {
+    font-size: 0.8rem;
+    color: var(--grey-light);
+    margin-top: 14px;
+  }
+
+  .form-msg {
+    margin-top: 14px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--accent);
+    display: none;
+  }
+
+  .form-msg.show { display: block; }
+
+  /* ---------- Footer ---------- */
+  footer {
+    border-top: 1px solid rgba(27,42,74,0.08);
+    padding: 36px 0;
+  }
+
+  .foot-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .foot-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+
+  .foot-brand .brand-mark { width: 18px; height: 18px; }
+
+  footer p { color: var(--grey-light); font-size: 0.82rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 184 240" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 -100 C 41.6 -100 76.7 -68.3 76.7 -26.7 C 76.7 23.3 0 91.7 0 91.7 C 0 91.7 -76.7 23.3 -76.7 -26.7 C -76.7 -68.3 -41.6 -100 0 -100 Z" transform="translate(92,108.3)" fill="#1B2A4A"/>
+          <path d="M0 -100 C 41.6 -100 76.7 -68.3 76.7 -26.7 C 76.7 23.3 0 91.7 0 91.7 L0 -100 Z" transform="translate(92,108.3)" fill="#2E75B6"/>
+          <line x1="92" y1="8.3" x2="92" y2="200" stroke="#FBFCFE" stroke-width="3.5"/>
+          <circle cx="92" cy="73.3" r="14.5" fill="none" stroke="#FBFCFE" stroke-width="3.5"/>
+        </svg>
+      </span>
+      Fitland-AI
+    </div>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#criteria">What we match</a>
+      <a href="#try">Try it</a>
+    </div>
+    <a class="nav-cta" href="#try">Try the demo</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-inner">
+    <div>
+      <div class="eyebrow">Relocation, matched to who you are</div>
+      <h1>The country that <em>fits</em> you.</h1>
+      <p class="hero-sub">Most people choose where to relocate based on one number — salary, or how hard the visa is. Fitland-AI matches you on the whole picture: language, family, faith, climate, safety, and more.</p>
+      <div class="hero-actions">
+        <a href="#try" class="btn btn-primary">Try the matching demo</a>
+        <a href="#how" class="btn btn-ghost">See how it works</a>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="ring-center">
+        <svg viewBox="0 0 184 240" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 -100 C 41.6 -100 76.7 -68.3 76.7 -26.7 C 76.7 23.3 0 91.7 0 91.7 C 0 91.7 -76.7 23.3 -76.7 -26.7 C -76.7 -68.3 -41.6 -100 0 -100 Z" transform="translate(92,108.3)" fill="#FFFFFF"/>
+          <line x1="92" y1="8.3" x2="92" y2="200" stroke="#1B2A4A" stroke-width="4"/>
+          <circle cx="92" cy="73.3" r="15" fill="none" stroke="#1B2A4A" stroke-width="4"/>
+        </svg>
+      </div>
+      <div class="crit-node n1"><span class="ico">🗣️</span>Language</div>
+      <div class="crit-node n2"><span class="ico">🎓</span>Education</div>
+      <div class="crit-node n3"><span class="ico">🛡️</span>Safety</div>
+      <div class="crit-node n4"><span class="ico">☀️</span>Climate</div>
+      <div class="crit-node n5"><span class="ico">👪</span>Family</div>
+      <div class="crit-node n6"><span class="ico">🕊️</span>Faith</div>
+    </div>
+  </div>
+</section>
+
+<section id="how" class="alt-bg">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">How it works</div>
+      <h2>From your profile to a ranked shortlist.</h2>
+      <p>No black box. Every recommendation comes with a reason you can check for yourself.</p>
+    </div>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-label">Step 1</div>
+        <h3>Tell us who you are</h3>
+        <p>Answer a short questionnaire, or upload a CV — we extract language, education, and family details automatically.</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-label">Step 2</div>
+        <h3>We match against real data</h3>
+        <p>Your profile is scored against country-level data: cost of living, safety, climate, schooling, and immigration pathways.</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-label">Step 3</div>
+        <h3>Get a ranked, explained shortlist</h3>
+        <p>See your top countries with the specific reasons each one ranked where it did — not just a single score.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="criteria">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">What we match on</div>
+      <h2>Your whole life, not one number.</h2>
+      <p>No existing platform combines all of these into one explainable recommendation.</p>
+    </div>
+    <div class="crit-grid">
+      <div class="crit-card"><div class="ico">🗣️</div><div class="label">Language</div></div>
+      <div class="crit-card"><div class="ico">🎓</div><div class="label">Education</div></div>
+      <div class="crit-card"><div class="ico">👪</div><div class="label">Family situation</div></div>
+      <div class="crit-card"><div class="ico">🕊️</div><div class="label">Faith</div></div>
+      <div class="crit-card"><div class="ico">🌇</div><div class="label">Lifestyle</div></div>
+      <div class="crit-card"><div class="ico">☀️</div><div class="label">Climate</div></div>
+      <div class="crit-card"><div class="ico">🏫</div><div class="label">Child education</div></div>
+      <div class="crit-card"><div class="ico">🛡️</div><div class="label">Safety</div></div>
+      <div class="crit-card"><div class="ico">💶</div><div class="label">Cost of living</div></div>
+      <div class="crit-card"><div class="ico">🛂</div><div class="label">Immigration path</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="try" class="alt-bg">
+  <div class="wrap">
+    <div class="demo-shell">
+      <div class="demo-head">
+        <h2>Try the matching demo</h2>
+        <span class="demo-progress" id="progressLabel">Question 1 of 3</span>
+      </div>
+      <p class="demo-sub">A quick illustrative preview — three questions, then a sample ranked result.</p>
+
+      <div class="q-panel">
+
+        <div class="q-step active" data-step="1">
+          <div class="q-title">What matters most about climate?</div>
+          <div class="opt-grid">
+            <button class="opt" data-q="1" data-v="warm">Warm and sunny year-round</button>
+            <button class="opt" data-q="1" data-v="seasons">Four distinct seasons</button>
+            <button class="opt" data-q="1" data-v="mild">Mild, rarely extreme</button>
+            <button class="opt" data-q="1" data-v="flex">Doesn't matter much</button>
+          </div>
+        </div>
+
+        <div class="q-step" data-step="2">
+          <div class="q-title">What's your priority for children's education?</div>
+          <div class="opt-grid">
+            <button class="opt" data-q="2" data-v="public">Strong free public schools</button>
+            <button class="opt" data-q="2" data-v="intl">International / bilingual schools</button>
+            <button class="opt" data-q="2" data-v="university">Top university access later</button>
+            <button class="opt" data-q="2" data-v="na">No children to plan for</button>
+          </div>
+        </div>
+
+        <div class="q-step" data-step="3">
+          <div class="q-title">How important is low cost of living?</div>
+          <div class="opt-grid">
+            <button class="opt" data-q="3" data-v="critical">Critical — budget is tight</button>
+            <button class="opt" data-q="3" data-v="balanced">Balanced with opportunity</button>
+            <button class="opt" data-q="3" data-v="low">Not a major factor</button>
+            <button class="opt" data-q="3" data-v="invest">Willing to invest for quality</button>
+          </div>
+        </div>
+
+        <div class="q-step" data-step="results">
+          <div class="q-title">Your illustrative top matches</div>
+          <div class="results-list" id="resultsList"></div>
+          <p class="demo-disclaimer">Sample output for demonstration — the live product scores against real country data across all 10 criteria, not just these three.</p>
+        </div>
+
+      </div>
+
+      <div class="q-nav">
+        <div class="q-dots">
+          <span class="q-dot" data-dot="1"></span>
+          <span class="q-dot" data-dot="2"></span>
+          <span class="q-dot" data-dot="3"></span>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button class="btn btn-ghost" id="backBtn" style="display:none;">Back</button>
+          <button class="btn btn-primary" id="nextBtn" disabled>Next</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="capture">
+  <div class="wrap">
+    <div class="section-head" style="margin: 0 auto 0; text-align:center;">
+      <div class="eyebrow" style="justify-content:center;">Early access</div>
+      <h2>Be first to try the full version.</h2>
+      <p>We're building the complete matching engine. Leave your email to get early access when it's ready.</p>
+    </div>
+    <form class="capture-form" id="emailForm">
+      <input type="email" id="emailInput" placeholder="you@example.com" required aria-label="Email address">
+      <button type="submit" class="btn btn-primary">Notify me</button>
+    </form>
+    <p class="form-msg" id="formMsg">You're on the list — we'll be in touch.</p>
+    <p class="capture-note">No spam. Just a note when the full matching engine is ready.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-inner">
+    <div class="foot-brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 184 240" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 -100 C 41.6 -100 76.7 -68.3 76.7 -26.7 C 76.7 23.3 0 91.7 0 91.7 C 0 91.7 -76.7 23.3 -76.7 -26.7 C -76.7 -68.3 -41.6 -100 0 -100 Z" transform="translate(92,108.3)" fill="#1B2A4A"/>
+          <path d="M0 -100 C 41.6 -100 76.7 -68.3 76.7 -26.7 C 76.7 23.3 0 91.7 0 91.7 L0 -100 Z" transform="translate(92,108.3)" fill="#2E75B6"/>
+        </svg>
+      </span>
+      Fitland-AI
+    </div>
+    <p>Migration, matched to who you are. — Test build, not for production use.</p>
+  </div>
+</footer>
+
+<script>
+(function() {
+  var answers = {};
+  var currentStep = 1;
+  var totalQuestions = 3;
+
+  var steps = document.querySelectorAll('.q-step');
+  var dots = document.querySelectorAll('.q-dot');
+  var nextBtn = document.getElementById('nextBtn');
+  var backBtn = document.getElementById('backBtn');
+  var progressLabel = document.getElementById('progressLabel');
+
+  document.querySelectorAll('.opt').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var q = btn.getAttribute('data-q');
+      document.querySelectorAll('.opt[data-q="' + q + '"]').forEach(function(b) {
+        b.classList.remove('selected');
+      });
+      btn.classList.add('selected');
+      answers[q] = btn.getAttribute('data-v');
+      nextBtn.disabled = false;
+    });
+  });
+
+  function showStep(n) {
+    steps.forEach(function(s) {
+      s.classList.toggle('active', s.getAttribute('data-step') == n);
+    });
+    if (n === 'results') {
+      backBtn.style.display = 'inline-flex';
+      nextBtn.style.display = 'none';
+      progressLabel.textContent = 'Your results';
+      renderResults();
+    } else {
+      backBtn.style.display = n > 1 ? 'inline-flex' : 'none';
+      nextBtn.style.display = 'inline-flex';
+      nextBtn.textContent = n == totalQuestions ? 'See my matches' : 'Next';
+      nextBtn.disabled = !answers[n];
+      progressLabel.textContent = 'Question ' + n + ' of ' + totalQuestions;
+    }
+    dots.forEach(function(d) {
+      var dn = parseInt(d.getAttribute('data-dot'), 10);
+      d.classList.toggle('done', dn < (n === 'results' ? totalQuestions + 1 : n));
+    });
+  }
+
+  nextBtn.addEventListener('click', function() {
+    if (currentStep < totalQuestions) {
+      currentStep++;
+      showStep(currentStep);
+    } else {
+      currentStep = 'results';
+      showStep('results');
+    }
+  });
+
+  backBtn.addEventListener('click', function() {
+    if (currentStep === 'results') {
+      currentStep = totalQuestions;
+    } else if (currentStep > 1) {
+      currentStep--;
+    }
+    showStep(currentStep);
+  });
+
+  // Illustrative scoring — for demo purposes only, not the real matching logic
+  var countryProfiles = [
+    { name: 'Portugal', climate: 'mild', edu: 'intl', cost: 'balanced' },
+    { name: 'Canada', climate: 'seasons', edu: 'public', cost: 'invest' },
+    { name: 'Costa Rica', climate: 'warm', edu: 'public', cost: 'critical' },
+    { name: 'Germany', climate: 'seasons', edu: 'university', cost: 'balanced' },
+    { name: 'Thailand', climate: 'warm', edu: 'intl', cost: 'critical' }
+  ];
+
+  function renderResults() {
+    var scored = countryProfiles.map(function(c) {
+      var score = 40;
+      if (answers['1'] === c.climate || answers['1'] === 'flex') score += 22;
+      if (answers['2'] === c.edu || answers['2'] === 'na') score += 20;
+      if (answers['3'] === c.cost || answers['3'] === 'low') score += 18;
+      score += Math.random() * 6;
+      return { name: c.name, score: Math.min(97, Math.round(score)) };
+    }).sort(function(a, b) { return b.score - a.score; }).slice(0, 3);
+
+    var reasons = {
+      1: { warm: 'warm climate fit', seasons: 'distinct seasons fit', mild: 'mild climate fit', flex: 'flexible on climate' },
+      2: { public: 'strong public schooling', intl: 'international school access', university: 'university pathway', na: 'no schooling constraint' },
+      3: { critical: 'low cost of living', balanced: 'balanced cost vs opportunity', low: 'cost not a constraint', invest: 'invests in quality of life' }
+    };
+
+    var list = document.getElementById('resultsList');
+    list.innerHTML = '';
+    scored.forEach(function(item, i) {
+      var why = [reasons[1][answers['1']], reasons[2][answers['2']], reasons[3][answers['3']]].join(' · ');
+      var row = document.createElement('div');
+      row.className = 'result-row';
+      row.innerHTML =
+        '<div class="result-rank">' + (i + 1) + '</div>' +
+        '<div class="result-body">' +
+          '<div class="result-country">' + item.name + '</div>' +
+          '<div class="result-why">' + why + '</div>' +
+        '</div>' +
+        '<div class="result-bar-track"><div class="result-bar-fill" style="width:' + item.score + '%"></div></div>';
+      list.appendChild(row);
+    });
+
+    // trigger bar animation after insertion
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        document.querySelectorAll('.result-bar-fill').forEach(function(el) {
+          el.style.width = el.style.width; // reflow, already set inline
+        });
+      });
+    });
+  }
+
+  showStep(1);
+
+  // Email capture (demo only — no backend wired up)
+  var form = document.getElementById('emailForm');
+  var msg = document.getElementById('formMsg');
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var email = document.getElementById('emailInput').value;
+    if (email) {
+      msg.classList.add('show');
+      form.reset();
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
