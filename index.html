@@ -1344,17 +1344,6 @@
 
   showStep(1);
 
-  // Email capture (demo only — no backend wired up)
-  var form = document.getElementById('emailForm');
-  var msg = document.getElementById('formMsg');
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    var email = document.getElementById('emailInput').value;
-    if (email) {
-      msg.classList.add('show');
-      form.reset();
-    }
-  });
 })();
 </script>
 
