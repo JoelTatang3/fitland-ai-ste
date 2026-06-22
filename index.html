@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fitland-AI — Where you go is who you are.</title>
+<title>Fitland-AI — The country that fits you.</title>
 <style>
   :root {
     --navy: #1B2A4A;
@@ -527,62 +527,141 @@
 
   /* ---------- Results ---------- */
   .results-list {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
     margin-bottom: 28px;
   }
 
-  .result-row {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 10px;
-    padding: 16px 18px;
+  .result-card {
+    background: rgba(255,255,255,0.055);
+    border: 1px solid rgba(255,255,255,0.13);
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.10);
+  }
+
+  .result-top {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    justify-content: space-between;
     gap: 16px;
+    margin-bottom: 16px;
   }
 
   .result-rank {
-    font-family: var(--serif);
-    font-size: 1.1rem;
+    font-size: 0.78rem;
     color: var(--accent-light);
-    width: 24px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
   }
-
-  .result-body { flex: 1; }
 
   .result-country {
-    font-weight: 700;
-    font-size: 1.02rem;
-    margin-bottom: 3px;
+    font-family: var(--serif);
+    font-size: 1.55rem;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.15;
   }
 
-  .result-why {
-    font-size: 0.82rem;
-    color: rgba(255,255,255,0.55);
+  .match-pill {
+    border: 1px solid rgba(91,155,213,0.55);
+    background: rgba(91,155,213,0.16);
+    color: var(--white);
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .score-line {
+    margin: 12px 0 18px;
+  }
+
+  .score-meta {
+    display: flex;
+    justify-content: space-between;
+    color: rgba(255,255,255,0.62);
+    font-size: 0.78rem;
+    margin-bottom: 7px;
   }
 
   .result-bar-track {
-    width: 90px;
-    height: 5px;
-    border-radius: 3px;
+    width: 100%;
+    height: 7px;
+    border-radius: 999px;
     background: rgba(255,255,255,0.12);
     overflow: hidden;
-    flex-shrink: 0;
   }
 
   .result-bar-fill {
     height: 100%;
     background: var(--accent-light);
-    border-radius: 3px;
+    border-radius: 999px;
     width: 0%;
     transition: width 0.7s ease;
   }
 
+  .result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  @media (max-width: 760px) {
+    .result-grid { grid-template-columns: 1fr; }
+    .result-top { flex-direction: column; }
+  }
+
+  .result-box {
+    border-radius: 12px;
+    background: rgba(255,255,255,0.045);
+    border: 1px solid rgba(255,255,255,0.09);
+    padding: 14px;
+  }
+
+  .result-box h4 {
+    color: rgba(255,255,255,0.92);
+    font-size: 0.9rem;
+    margin-bottom: 9px;
+  }
+
+  .result-box ul {
+    padding-left: 18px;
+  }
+
+  .result-box li {
+    color: rgba(255,255,255,0.62);
+    font-size: 0.84rem;
+    margin-bottom: 5px;
+  }
+
+  .next-step {
+    margin-top: 14px;
+    color: rgba(255,255,255,0.68);
+    font-size: 0.86rem;
+    line-height: 1.5;
+    border-top: 1px solid rgba(255,255,255,0.10);
+    padding-top: 14px;
+  }
+
+  .contribution-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    color: rgba(255,255,255,0.58);
+    font-size: 0.8rem;
+    padding: 4px 0;
+  }
+
+  .contribution-row strong { color: rgba(255,255,255,0.84); }
+
   .demo-disclaimer {
     font-size: 0.78rem;
-    color: rgba(255,255,255,0.4);
+    color: rgba(255,255,255,0.45);
     margin-top: 18px;
   }
 
@@ -688,7 +767,7 @@
   <div class="wrap hero-inner">
     <div>
       <div class="eyebrow">Relocation, matched to who you are</div>
-      <h1>Where you go is <em>who</em> you are.</h1>
+      <h1>The country that <em>fits</em> you.</h1>
       <p class="hero-sub">Most people choose where to relocate based on one number — salary, or how hard the visa is. Fitland-AI matches you on the whole picture: language, family, faith, climate, safety, and more.</p>
       <div class="hero-actions">
         <a href="#try" class="btn btn-primary">Try the matching demo</a>
@@ -767,46 +846,76 @@
     <div class="demo-shell">
       <div class="demo-head">
         <h2>Try the matching demo</h2>
-        <span class="demo-progress" id="progressLabel">Question 1 of 3</span>
+        <span class="demo-progress" id="progressLabel">Question 1 of 6</span>
       </div>
-      <p class="demo-sub">A quick illustrative preview — three questions, then a sample ranked result.</p>
+      <p class="demo-sub">A richer preview: answer six questions and get a ranked shortlist with reasons, trade-offs, and next steps.</p>
 
       <div class="q-panel">
 
         <div class="q-step active" data-step="1">
-          <div class="q-title">What matters most about climate?</div>
+          <div class="q-title">What is your main reason for relocating?</div>
           <div class="opt-grid">
-            <button class="opt" data-q="1" data-v="warm">Warm and sunny year-round</button>
-            <button class="opt" data-q="1" data-v="seasons">Four distinct seasons</button>
-            <button class="opt" data-q="1" data-v="mild">Mild, rarely extreme</button>
-            <button class="opt" data-q="1" data-v="flex">Doesn't matter much</button>
+            <button class="opt" data-q="1" data-v="career">Better career opportunities</button>
+            <button class="opt" data-q="1" data-v="family">A better family life</button>
+            <button class="opt" data-q="1" data-v="education">Education and future study</button>
+            <button class="opt" data-q="1" data-v="safety">Safety and stability</button>
           </div>
         </div>
 
         <div class="q-step" data-step="2">
-          <div class="q-title">What's your priority for children's education?</div>
+          <div class="q-title">What is your family situation?</div>
           <div class="opt-grid">
-            <button class="opt" data-q="2" data-v="public">Strong free public schools</button>
-            <button class="opt" data-q="2" data-v="intl">International / bilingual schools</button>
-            <button class="opt" data-q="2" data-v="university">Top university access later</button>
-            <button class="opt" data-q="2" data-v="na">No children to plan for</button>
+            <button class="opt" data-q="2" data-v="single">Single / moving alone</button>
+            <button class="opt" data-q="2" data-v="couple">Moving as a couple</button>
+            <button class="opt" data-q="2" data-v="kids">Moving with children</button>
+            <button class="opt" data-q="2" data-v="support">Need family/community support</button>
           </div>
         </div>
 
         <div class="q-step" data-step="3">
-          <div class="q-title">How important is low cost of living?</div>
+          <div class="q-title">What is your highest education level?</div>
           <div class="opt-grid">
-            <button class="opt" data-q="3" data-v="critical">Critical — budget is tight</button>
-            <button class="opt" data-q="3" data-v="balanced">Balanced with opportunity</button>
-            <button class="opt" data-q="3" data-v="low">Not a major factor</button>
-            <button class="opt" data-q="3" data-v="invest">Willing to invest for quality</button>
+            <button class="opt" data-q="3" data-v="highschool">High school / vocational</button>
+            <button class="opt" data-q="3" data-v="bachelor">Bachelor degree</button>
+            <button class="opt" data-q="3" data-v="master">Master degree</button>
+            <button class="opt" data-q="3" data-v="phd">PhD / research profile</button>
+          </div>
+        </div>
+
+        <div class="q-step" data-step="4">
+          <div class="q-title">How flexible are you with language?</div>
+          <div class="opt-grid">
+            <button class="opt" data-q="4" data-v="english">I prefer English-speaking countries</button>
+            <button class="opt" data-q="4" data-v="french">French-speaking countries are fine</button>
+            <button class="opt" data-q="4" data-v="learn">I am willing to learn a new language</button>
+            <button class="opt" data-q="4" data-v="any">Language is not a major constraint</button>
+          </div>
+        </div>
+
+        <div class="q-step" data-step="5">
+          <div class="q-title">Which climate would suit you best?</div>
+          <div class="opt-grid">
+            <button class="opt" data-q="5" data-v="warm">Warm and sunny</button>
+            <button class="opt" data-q="5" data-v="mild">Mild, rarely extreme</button>
+            <button class="opt" data-q="5" data-v="seasons">Four distinct seasons</button>
+            <button class="opt" data-q="5" data-v="flex">Climate is flexible</button>
+          </div>
+        </div>
+
+        <div class="q-step" data-step="6">
+          <div class="q-title">How important is cost of living?</div>
+          <div class="opt-grid">
+            <button class="opt" data-q="6" data-v="low">Very important — I need affordability</button>
+            <button class="opt" data-q="6" data-v="balanced">Balanced with opportunity</button>
+            <button class="opt" data-q="6" data-v="quality">I can pay more for quality of life</button>
+            <button class="opt" data-q="6" data-v="salary">High salary matters more than low costs</button>
           </div>
         </div>
 
         <div class="q-step" data-step="results">
-          <div class="q-title">Your illustrative top matches</div>
+          <div class="q-title">Your personalized country shortlist</div>
           <div class="results-list" id="resultsList"></div>
-          <p class="demo-disclaimer">Sample output for demonstration — the live product scores against real country data across all 10 criteria, not just these three.</p>
+          <p class="demo-disclaimer">This is a prototype recommendation engine for demonstration only. A production version should connect to verified country-level data on immigration, jobs, schools, safety, cost of living, healthcare, taxes, and user feedback.</p>
         </div>
 
       </div>
@@ -816,6 +925,9 @@
           <span class="q-dot" data-dot="1"></span>
           <span class="q-dot" data-dot="2"></span>
           <span class="q-dot" data-dot="3"></span>
+          <span class="q-dot" data-dot="4"></span>
+          <span class="q-dot" data-dot="5"></span>
+          <span class="q-dot" data-dot="6"></span>
         </div>
         <div style="display:flex; gap:10px;">
           <button class="btn btn-ghost" id="backBtn" style="display:none;">Back</button>
@@ -831,7 +943,7 @@
     <div class="section-head" style="margin: 0 auto 0; text-align:center;">
       <div class="eyebrow" style="justify-content:center;">Early access</div>
       <h2>Be first to try the full version.</h2>
-      <p>We're building the complete matching engine. Leave your email to get early access when it's ready.</p>
+      <p>We're building the full relocation advisor. Leave your email to get early access when the complete matching engine is ready.</p>
     </div>
     <form class="capture-form" id="emailForm">
       <input type="email" id="emailInput" placeholder="you@example.com" required aria-label="Email address">
@@ -861,7 +973,7 @@
 (function() {
   var answers = {};
   var currentStep = 1;
-  var totalQuestions = 3;
+  var totalQuestions = 6;
 
   var steps = document.querySelectorAll('.q-step');
   var dots = document.querySelectorAll('.q-dot');
@@ -885,6 +997,7 @@
     steps.forEach(function(s) {
       s.classList.toggle('active', s.getAttribute('data-step') == n);
     });
+
     if (n === 'results') {
       backBtn.style.display = 'inline-flex';
       nextBtn.style.display = 'none';
@@ -897,6 +1010,7 @@
       nextBtn.disabled = !answers[n];
       progressLabel.textContent = 'Question ' + n + ' of ' + totalQuestions;
     }
+
     dots.forEach(function(d) {
       var dn = parseInt(d.getAttribute('data-dot'), 10);
       d.classList.toggle('done', dn < (n === 'results' ? totalQuestions + 1 : n));
@@ -922,54 +1036,298 @@
     showStep(currentStep);
   });
 
-  // Illustrative scoring — for demo purposes only, not the real matching logic
+  // Prototype scoring model.
+  // In production, these weights should be learned or calibrated using reliable country data and user feedback.
   var countryProfiles = [
-    { name: 'Portugal', climate: 'mild', edu: 'intl', cost: 'balanced' },
-    { name: 'Canada', climate: 'seasons', edu: 'public', cost: 'invest' },
-    { name: 'Costa Rica', climate: 'warm', edu: 'public', cost: 'critical' },
-    { name: 'Germany', climate: 'seasons', edu: 'university', cost: 'balanced' },
-    { name: 'Thailand', climate: 'warm', edu: 'intl', cost: 'critical' }
+    {
+      name: '🇨🇦 Canada',
+      tags: {
+        career: 9, family: 9, education: 9, safety: 9,
+        single: 7, couple: 8, kids: 9, support: 7,
+        highschool: 6, bachelor: 8, master: 9, phd: 9,
+        english: 10, french: 8, learn: 7, any: 8,
+        warm: 2, mild: 5, seasons: 9, flex: 7,
+        low: 3, balanced: 6, quality: 8, salary: 9
+      },
+      strengths: [
+        'Strong immigration pathways for skilled workers and graduates',
+        'Excellent public education and family-oriented infrastructure',
+        'High safety, stability, and long-term settlement potential'
+      ],
+      concerns: [
+        'Housing can be expensive in major cities',
+        'Winters can be difficult if you prefer a warm climate'
+      ],
+      next: 'Compare provinces rather than only cities: Calgary, Ottawa, Halifax, and Edmonton may offer better affordability than Toronto or Vancouver.'
+    },
+    {
+      name: '🇩🇪 Germany',
+      tags: {
+        career: 9, family: 8, education: 9, safety: 8,
+        single: 8, couple: 8, kids: 8, support: 6,
+        highschool: 7, bachelor: 8, master: 9, phd: 10,
+        english: 5, french: 3, learn: 9, any: 8,
+        warm: 3, mild: 6, seasons: 8, flex: 7,
+        low: 7, balanced: 9, quality: 8, salary: 8
+      },
+      strengths: [
+        'Strong job market, especially in engineering, tech, research, and industry',
+        'Excellent universities and research ecosystem',
+        'Good balance between opportunity, safety, and cost compared with many rich countries'
+      ],
+      concerns: [
+        'German language matters for integration and many jobs',
+        'Bureaucracy can be slow and difficult at the beginning'
+      ],
+      next: 'Assess whether your profession has strong English-speaking entry points, then compare Berlin, Munich, Hamburg, Aachen, and Heidelberg.'
+    },
+    {
+      name: '🇵🇹 Portugal',
+      tags: {
+        career: 6, family: 8, education: 7, safety: 8,
+        single: 8, couple: 8, kids: 8, support: 7,
+        highschool: 7, bachelor: 7, master: 7, phd: 6,
+        english: 7, french: 4, learn: 8, any: 8,
+        warm: 8, mild: 10, seasons: 5, flex: 8,
+        low: 7, balanced: 8, quality: 8, salary: 5
+      },
+      strengths: [
+        'Mild climate and strong lifestyle fit',
+        'Generally safe and family-friendly',
+        'Good option for people prioritising quality of life over maximum salary'
+      ],
+      concerns: [
+        'Salaries can be lower than Northern Europe or North America',
+        'Housing has become expensive in Lisbon and Porto'
+      ],
+      next: 'Compare Lisbon with smaller cities such as Braga, Coimbra, Aveiro, and Setúbal if affordability matters.'
+    },
+    {
+      name: '🇦🇺 Australia',
+      tags: {
+        career: 8, family: 8, education: 8, safety: 8,
+        single: 8, couple: 8, kids: 8, support: 6,
+        highschool: 7, bachelor: 8, master: 8, phd: 8,
+        english: 10, french: 2, learn: 6, any: 8,
+        warm: 9, mild: 7, seasons: 4, flex: 8,
+        low: 3, balanced: 6, quality: 9, salary: 9
+      },
+      strengths: [
+        'English-speaking environment with strong salaries',
+        'Good climate and high quality of life',
+        'Strong universities and skilled migration pathways'
+      ],
+      concerns: [
+        'Very far from many regions of the world',
+        'Housing and living costs are high in major cities'
+      ],
+      next: 'Look at skilled occupation lists first, then compare Sydney/Melbourne with Brisbane, Adelaide, and Perth.'
+    },
+    {
+      name: '🇫🇷 France',
+      tags: {
+        career: 7, family: 8, education: 8, safety: 7,
+        single: 7, couple: 8, kids: 8, support: 7,
+        highschool: 7, bachelor: 8, master: 8, phd: 8,
+        english: 4, french: 10, learn: 8, any: 7,
+        warm: 6, mild: 8, seasons: 7, flex: 8,
+        low: 6, balanced: 8, quality: 8, salary: 6
+      },
+      strengths: [
+        'Strong public services, healthcare, and education',
+        'Good cultural fit for French speakers',
+        'Good option for families prioritising stability and public infrastructure'
+      ],
+      concerns: [
+        'French language is important for most jobs and administration',
+        'Employment market can be competitive depending on sector'
+      ],
+      next: 'Compare Paris with Lyon, Toulouse, Nantes, Grenoble, and Montpellier depending on career sector and family needs.'
+    },
+    {
+      name: '🇳🇱 Netherlands',
+      tags: {
+        career: 9, family: 8, education: 8, safety: 8,
+        single: 8, couple: 8, kids: 8, support: 6,
+        highschool: 7, bachelor: 8, master: 9, phd: 9,
+        english: 9, french: 3, learn: 8, any: 8,
+        warm: 2, mild: 7, seasons: 7, flex: 7,
+        low: 3, balanced: 6, quality: 8, salary: 8
+      },
+      strengths: [
+        'Strong English-speaking professional environment',
+        'Excellent infrastructure and international work culture',
+        'Good fit for skilled professionals and researchers'
+      ],
+      concerns: [
+        'Housing shortage is a major issue',
+        'Weather can feel grey and damp for some people'
+      ],
+      next: 'Check housing availability early and compare Amsterdam with Eindhoven, Utrecht, Rotterdam, Delft, and Groningen.'
+    },
+    {
+      name: '🇦🇪 United Arab Emirates',
+      tags: {
+        career: 8, family: 7, education: 7, safety: 9,
+        single: 8, couple: 7, kids: 7, support: 7,
+        highschool: 6, bachelor: 7, master: 8, phd: 6,
+        english: 9, french: 4, learn: 6, any: 8,
+        warm: 10, mild: 4, seasons: 1, flex: 7,
+        low: 2, balanced: 5, quality: 8, salary: 9
+      },
+      strengths: [
+        'High salaries in several professional sectors',
+        'Very safe urban environment',
+        'Strong international community and English widely used'
+      ],
+      concerns: [
+        'Long-term citizenship pathway is limited',
+        'Education and housing can be costly for families'
+      ],
+      next: 'Assess salary package carefully, especially housing, school fees, health insurance, and long-term residency options.'
+    },
+    {
+      name: '🇲🇾 Malaysia',
+      tags: {
+        career: 6, family: 8, education: 7, safety: 7,
+        single: 8, couple: 8, kids: 8, support: 8,
+        highschool: 7, bachelor: 7, master: 7, phd: 6,
+        english: 8, french: 2, learn: 7, any: 8,
+        warm: 10, mild: 4, seasons: 1, flex: 8,
+        low: 9, balanced: 8, quality: 7, salary: 5
+      },
+      strengths: [
+        'Affordable cost of living relative to quality of life',
+        'Warm climate and diverse cultural environment',
+        'Good international schools in larger cities'
+      ],
+      concerns: [
+        'Career opportunities may depend strongly on sector',
+        'Long-term immigration routes can be less straightforward'
+      ],
+      next: 'Compare Kuala Lumpur and Penang, and check whether your target industry has strong local demand.'
+    }
   ];
+
+  var answerLabels = {
+    '1': {
+      career: 'career growth',
+      family: 'family life',
+      education: 'education',
+      safety: 'safety and stability'
+    },
+    '2': {
+      single: 'moving alone',
+      couple: 'moving as a couple',
+      kids: 'moving with children',
+      support: 'community support'
+    },
+    '3': {
+      highschool: 'vocational or high school profile',
+      bachelor: 'bachelor-level profile',
+      master: 'master-level profile',
+      phd: 'PhD or research profile'
+    },
+    '4': {
+      english: 'English language preference',
+      french: 'French language preference',
+      learn: 'willingness to learn a language',
+      any: 'language flexibility'
+    },
+    '5': {
+      warm: 'warm climate',
+      mild: 'mild climate',
+      seasons: 'four seasons',
+      flex: 'climate flexibility'
+    },
+    '6': {
+      low: 'affordability',
+      balanced: 'cost-opportunity balance',
+      quality: 'quality of life',
+      salary: 'salary potential'
+    }
+  };
+
+  function scoreCountry(country) {
+    var weights = { '1': 1.35, '2': 1.10, '3': 0.95, '4': 1.05, '5': 0.75, '6': 1.00 };
+    var total = 0;
+    var maxTotal = 0;
+    var contributions = [];
+
+    Object.keys(answers).forEach(function(q) {
+      var key = answers[q];
+      var raw = country.tags[key] || 0;
+      var weighted = raw * weights[q];
+      total += weighted;
+      maxTotal += 10 * weights[q];
+      contributions.push({
+        label: answerLabels[q][key],
+        points: Math.round(weighted * 10) / 10
+      });
+    });
+
+    var score = Math.round((total / maxTotal) * 100);
+    return { score: score, contributions: contributions.sort(function(a,b){ return b.points - a.points; }) };
+  }
+
+  function matchLabel(score) {
+    if (score >= 84) return 'Excellent match';
+    if (score >= 74) return 'Strong match';
+    if (score >= 64) return 'Promising match';
+    return 'Possible match';
+  }
 
   function renderResults() {
     var scored = countryProfiles.map(function(c) {
-      var score = 40;
-      if (answers['1'] === c.climate || answers['1'] === 'flex') score += 22;
-      if (answers['2'] === c.edu || answers['2'] === 'na') score += 20;
-      if (answers['3'] === c.cost || answers['3'] === 'low') score += 18;
-      score += Math.random() * 6;
-      return { name: c.name, score: Math.min(97, Math.round(score)) };
+      var result = scoreCountry(c);
+      return Object.assign({}, c, result);
     }).sort(function(a, b) { return b.score - a.score; }).slice(0, 3);
-
-    var reasons = {
-      1: { warm: 'warm climate fit', seasons: 'distinct seasons fit', mild: 'mild climate fit', flex: 'flexible on climate' },
-      2: { public: 'strong public schooling', intl: 'international school access', university: 'university pathway', na: 'no schooling constraint' },
-      3: { critical: 'low cost of living', balanced: 'balanced cost vs opportunity', low: 'cost not a constraint', invest: 'invests in quality of life' }
-    };
 
     var list = document.getElementById('resultsList');
     list.innerHTML = '';
-    scored.forEach(function(item, i) {
-      var why = [reasons[1][answers['1']], reasons[2][answers['2']], reasons[3][answers['3']]].join(' · ');
-      var row = document.createElement('div');
-      row.className = 'result-row';
-      row.innerHTML =
-        '<div class="result-rank">' + (i + 1) + '</div>' +
-        '<div class="result-body">' +
-          '<div class="result-country">' + item.name + '</div>' +
-          '<div class="result-why">' + why + '</div>' +
-        '</div>' +
-        '<div class="result-bar-track"><div class="result-bar-fill" style="width:' + item.score + '%"></div></div>';
-      list.appendChild(row);
-    });
 
-    // trigger bar animation after insertion
-    requestAnimationFrame(function() {
-      requestAnimationFrame(function() {
-        document.querySelectorAll('.result-bar-fill').forEach(function(el) {
-          el.style.width = el.style.width; // reflow, already set inline
-        });
-      });
+    scored.forEach(function(item, i) {
+      var strengths = item.strengths.slice(0,3).map(function(s) { return '<li>' + s + '</li>'; }).join('');
+      var concerns = item.concerns.slice(0,2).map(function(s) { return '<li>' + s + '</li>'; }).join('');
+      var contributions = item.contributions.slice(0,4).map(function(c) {
+        return '<div class="contribution-row"><span>' + c.label + '</span><strong>+' + c.points + '</strong></div>';
+      }).join('');
+
+      var card = document.createElement('div');
+      card.className = 'result-card';
+      card.innerHTML =
+        '<div class="result-top">' +
+          '<div>' +
+            '<div class="result-rank">#' + (i + 1) + ' recommendation</div>' +
+            '<div class="result-country">' + item.name + '</div>' +
+          '</div>' +
+          '<div class="match-pill">' + matchLabel(item.score) + '</div>' +
+        '</div>' +
+
+        '<div class="score-line">' +
+          '<div class="score-meta"><span>Fit score</span><strong>' + item.score + '%</strong></div>' +
+          '<div class="result-bar-track"><div class="result-bar-fill" style="width:' + item.score + '%"></div></div>' +
+        '</div>' +
+
+        '<div class="result-grid">' +
+          '<div class="result-box">' +
+            '<h4>Why it fits you</h4>' +
+            '<ul>' + strengths + '</ul>' +
+          '</div>' +
+          '<div class="result-box">' +
+            '<h4>Potential concerns</h4>' +
+            '<ul>' + concerns + '</ul>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="result-box" style="margin-top:14px;">' +
+          '<h4>What drove the score</h4>' +
+          contributions +
+        '</div>' +
+
+        '<div class="next-step"><strong>Suggested next step:</strong> ' + item.next + '</div>';
+
+      list.appendChild(card);
     });
   }
 
