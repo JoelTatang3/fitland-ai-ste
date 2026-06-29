@@ -3,1372 +3,622 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fitland-AI — The country that fits you.</title>
+<title>Fitland-AI — Your path. Your people. Your place.</title>
 <style>
-  :root {
-    --navy: #1B2A4A;
-    --navy-deep: #11192E;
-    --accent: #2E75B6;
-    --accent-light: #5B9BD5;
-    --bg: #FBFCFE;
-    --bg-soft: #EAF1F8;
-    --grey: #5B6478;
-    --grey-light: #8893A8;
-    --white: #FFFFFF;
-    --serif: 'Source Serif Pro', Georgia, 'Times New Roman', serif;
-    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: var(--sans);
-    color: var(--navy);
-    background: var(--bg);
-    line-height: 1.55;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  a { color: inherit; text-decoration: none; }
-
-  img, svg { display: block; max-width: 100%; }
-
-  .wrap {
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 0 28px;
-  }
-
-  /* ---------- Focus visibility ---------- */
-  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 3px;
-  }
-
-  /* ---------- Nav ---------- */
-  header {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    background: rgba(251, 252, 254, 0.92);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(27, 42, 74, 0.08);
-  }
-
-  nav {
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 18px 28px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 700;
-    font-size: 1.15rem;
-    letter-spacing: -0.01em;
-  }
-
-  .brand-mark {
-    width: 26px;
-    height: 26px;
-    flex-shrink: 0;
-  }
-
-  .brand-mark svg { width: 100%; height: 100%; }
-
-  .nav-links {
-    display: flex;
-    gap: 32px;
-    font-size: 0.92rem;
-    color: var(--grey);
-  }
-
-  .nav-links a:hover { color: var(--navy); }
-
-  .nav-cta {
-    background: var(--navy);
-    color: var(--white) !important;
-    padding: 9px 18px;
-    border-radius: 7px;
-    font-size: 0.88rem;
-    font-weight: 600;
-    transition: background 0.15s ease;
-  }
-
-  .nav-cta:hover { background: var(--accent); }
-
-  @media (max-width: 760px) {
-    .nav-links { display: none; }
-  }
-
-  /* ---------- Hero ---------- */
-  .hero {
-    padding: 96px 0 84px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero::before {
-    content: "";
-    position: absolute;
-    top: -120px;
-    right: -180px;
-    width: 520px;
-    height: 520px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(46,117,182,0.10) 0%, rgba(46,117,182,0) 70%);
-    pointer-events: none;
-  }
-
-  .hero-inner {
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 56px;
-    align-items: center;
-  }
-
-  @media (max-width: 880px) {
-    .hero-inner { grid-template-columns: 1fr; }
-  }
-
-  .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 20px;
-  }
-
-  .eyebrow::before {
-    content: "";
-    width: 16px;
-    height: 1.5px;
-    background: var(--accent);
-  }
-
-  h1 {
-    font-family: var(--serif);
-    font-size: clamp(2.4rem, 4.6vw, 3.6rem);
-    font-weight: 600;
-    line-height: 1.08;
-    letter-spacing: -0.015em;
-    margin-bottom: 22px;
-  }
-
-  h1 em {
-    font-style: italic;
-    color: var(--accent);
-  }
-
-  .hero-sub {
-    font-size: 1.1rem;
-    color: var(--grey);
-    max-width: 46ch;
-    margin-bottom: 34px;
-  }
-
-  .hero-actions {
-    display: flex;
-    gap: 14px;
-    flex-wrap: wrap;
-  }
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 13px 24px;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    border: 1.5px solid transparent;
-    cursor: pointer;
-    transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.15s ease;
-  }
-
-  .btn:hover { transform: translateY(-1px); }
-
-  .btn-primary {
-    background: var(--navy);
-    color: var(--white);
-    box-shadow: 0 1px 2px rgba(27,42,74,0.15);
-  }
-
-  .btn-primary:hover { background: var(--accent); box-shadow: 0 6px 16px rgba(46,117,182,0.28); }
-
-  .btn-ghost {
-    background: transparent;
-    color: var(--navy);
-    border-color: rgba(27,42,74,0.2);
-  }
-
-  .btn-ghost:hover { border-color: var(--navy); }
-
-  /* ---------- Hero visual: rotating criteria ring ---------- */
-  .hero-visual {
-    position: relative;
-    aspect-ratio: 1;
-    max-width: 380px;
-    margin: 0 auto;
-  }
-
-  .ring-center {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 128px;
-    height: 128px;
-    border-radius: 50%;
-    background: var(--navy);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 18px 38px rgba(27,42,74,0.28);
-    z-index: 2;
-  }
-
-  .ring-center svg { width: 46px; height: 46px; }
-
-  .crit-node {
-    position: absolute;
-    width: 84px;
-    height: 84px;
-    border-radius: 50%;
-    background: var(--white);
-    border: 1.5px solid rgba(27,42,74,0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-    font-size: 0.62rem;
-    font-weight: 600;
-    color: var(--navy);
-    padding: 6px;
-    box-shadow: 0 6px 18px rgba(27,42,74,0.07);
-    animation: float 6s ease-in-out infinite;
-  }
-
-  .crit-node .ico { font-size: 1.2rem; margin-bottom: 2px; }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-7px); }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .crit-node { animation: none; }
-  }
-
-  .n1 { top: 0; left: 50%; transform: translateX(-50%); animation-delay: 0s; }
-  .n2 { top: 14%; right: 0; animation-delay: 0.6s; }
-  .n3 { bottom: 14%; right: 4%; animation-delay: 1.2s; }
-  .n4 { bottom: 0; left: 50%; transform: translateX(-50%); animation-delay: 1.8s; }
-  .n5 { bottom: 14%; left: 4%; animation-delay: 2.4s; }
-  .n6 { top: 14%; left: 0; animation-delay: 3s; }
-
-  @media (max-width: 880px) {
-    .hero-visual { max-width: 300px; }
-    .crit-node { width: 68px; height: 68px; font-size: 0.56rem; }
-    .ring-center { width: 100px; height: 100px; }
-    .ring-center svg { width: 36px; height: 36px; }
-  }
-
-  /* ---------- Section shared ---------- */
-  section { padding: 88px 0; }
-
-  .section-head {
-    max-width: 56ch;
-    margin-bottom: 52px;
-  }
-
-  .section-head .eyebrow { margin-bottom: 14px; }
-
-  h2 {
-    font-family: var(--serif);
-    font-size: clamp(1.7rem, 3vw, 2.3rem);
-    font-weight: 600;
-    letter-spacing: -0.01em;
-    margin-bottom: 14px;
-  }
-
-  .section-head p {
-    color: var(--grey);
-    font-size: 1.02rem;
-  }
-
-  .alt-bg { background: var(--bg-soft); }
-
-  /* ---------- How it works ---------- */
-  .flow {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    position: relative;
-  }
-
-  @media (max-width: 760px) {
-    .flow { grid-template-columns: 1fr; gap: 36px; }
-  }
-
-  .flow-step {
-    position: relative;
-    padding-right: 36px;
-  }
-
-  .flow-step:not(:last-child)::after {
-    content: "→";
-    position: absolute;
-    top: 22px;
-    right: -4px;
-    color: var(--accent-light);
-    font-size: 1.3rem;
-  }
-
-  @media (max-width: 760px) {
-    .flow-step:not(:last-child)::after { content: "↓"; right: auto; left: 22px; top: auto; bottom: -30px; }
-    .flow-step { padding-right: 0; }
-  }
-
-  .flow-label {
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 10px;
-  }
-
-  .flow-step h3 {
-    font-size: 1.18rem;
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
-
-  .flow-step p {
-    color: var(--grey);
-    font-size: 0.94rem;
-  }
-
-  /* ---------- Criteria grid ---------- */
-  .crit-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 14px;
-  }
-
-  @media (max-width: 880px) {
-    .crit-grid { grid-template-columns: repeat(3, 1fr); }
-  }
-
-  @media (max-width: 560px) {
-    .crit-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-
-  .crit-card {
-    background: var(--white);
-    border: 1px solid rgba(27,42,74,0.08);
-    border-radius: 12px;
-    padding: 20px 14px;
-    text-align: center;
-    transition: border-color 0.15s ease, transform 0.15s ease;
-  }
-
-  .crit-card:hover {
-    border-color: var(--accent);
-    transform: translateY(-2px);
-  }
-
-  .crit-card .ico { font-size: 1.5rem; margin-bottom: 10px; }
-
-  .crit-card .label {
-    font-size: 0.82rem;
-    font-weight: 600;
-  }
-
-  /* ---------- Questionnaire demo ---------- */
-  .demo-shell {
-    background: var(--navy);
-    border-radius: 20px;
-    padding: 48px;
-    color: var(--white);
-    position: relative;
-    overflow: hidden;
-  }
-
-  @media (max-width: 640px) {
-    .demo-shell { padding: 32px 22px; }
-  }
-
-  .demo-shell::before {
-    content: "";
-    position: absolute;
-    bottom: -140px;
-    left: -100px;
-    width: 380px;
-    height: 380px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(46,117,182,0.22) 0%, rgba(46,117,182,0) 70%);
-  }
-
-  .demo-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 8px;
-    position: relative;
-  }
-
-  .demo-head h2 { color: var(--white); margin-bottom: 0; }
-
-  .demo-progress {
-    font-size: 0.8rem;
-    color: rgba(255,255,255,0.55);
-    font-weight: 600;
-  }
-
-  .demo-sub {
-    color: rgba(255,255,255,0.6);
-    font-size: 0.95rem;
-    margin-bottom: 34px;
-    position: relative;
-  }
-
-  .q-panel { position: relative; min-height: 260px; }
-
-  .q-step { display: none; }
-  .q-step.active { display: block; animation: fadein 0.25s ease; }
-
-  @keyframes fadein {
-    from { opacity: 0; transform: translateY(6px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .q-title {
-    font-size: 1.3rem;
-    font-weight: 600;
-    margin-bottom: 24px;
-    font-family: var(--serif);
-  }
-
-  .opt-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    margin-bottom: 28px;
-  }
-
-  @media (max-width: 560px) {
-    .opt-grid { grid-template-columns: 1fr; }
-  }
-
-  .opt {
-    background: rgba(255,255,255,0.05);
-    border: 1.5px solid rgba(255,255,255,0.14);
-    border-radius: 10px;
-    padding: 14px 16px;
-    font-size: 0.92rem;
-    color: var(--white);
-    cursor: pointer;
-    text-align: left;
-    transition: border-color 0.12s ease, background 0.12s ease;
-  }
-
-  .opt:hover { border-color: rgba(255,255,255,0.4); }
-
-  .opt.selected {
-    border-color: var(--accent-light);
-    background: rgba(46,117,182,0.28);
-  }
-
-  .q-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .q-nav .btn-ghost {
-    color: var(--white);
-    border-color: rgba(255,255,255,0.25);
-  }
-
-  .q-nav .btn-ghost:hover { border-color: var(--white); }
-
-  .q-nav .btn-primary:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-    transform: none;
-  }
-
-  .q-dots {
-    display: flex;
-    gap: 6px;
-  }
-
-  .q-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.25);
-  }
-
-  .q-dot.done { background: var(--accent-light); }
-
-  /* ---------- Results ---------- */
-  .results-list {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 18px;
-    margin-bottom: 28px;
-  }
-
-  .result-card {
-    background: rgba(255,255,255,0.055);
-    border: 1px solid rgba(255,255,255,0.13);
-    border-radius: 16px;
-    padding: 22px;
-    box-shadow: 0 12px 28px rgba(0,0,0,0.10);
-  }
-
-  .result-top {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 16px;
-    margin-bottom: 16px;
-  }
-
-  .result-rank {
-    font-size: 0.78rem;
-    color: var(--accent-light);
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-
-  .result-country {
-    font-family: var(--serif);
-    font-size: 1.55rem;
-    font-weight: 600;
-    color: var(--white);
-    line-height: 1.15;
-  }
-
-  .match-pill {
-    border: 1px solid rgba(91,155,213,0.55);
-    background: rgba(91,155,213,0.16);
-    color: var(--white);
-    border-radius: 999px;
-    padding: 8px 12px;
-    font-size: 0.78rem;
-    font-weight: 700;
-    white-space: nowrap;
-  }
-
-  .score-line {
-    margin: 12px 0 18px;
-  }
-
-  .score-meta {
-    display: flex;
-    justify-content: space-between;
-    color: rgba(255,255,255,0.62);
-    font-size: 0.78rem;
-    margin-bottom: 7px;
-  }
-
-  .result-bar-track {
-    width: 100%;
-    height: 7px;
-    border-radius: 999px;
-    background: rgba(255,255,255,0.12);
-    overflow: hidden;
-  }
-
-  .result-bar-fill {
-    height: 100%;
-    background: var(--accent-light);
-    border-radius: 999px;
-    width: 0%;
-    transition: width 0.7s ease;
-  }
-
-  .result-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-  }
-
-  @media (max-width: 760px) {
-    .result-grid { grid-template-columns: 1fr; }
-    .result-top { flex-direction: column; }
-  }
-
-  .result-box {
-    border-radius: 12px;
-    background: rgba(255,255,255,0.045);
-    border: 1px solid rgba(255,255,255,0.09);
-    padding: 14px;
-  }
-
-  .result-box h4 {
-    color: rgba(255,255,255,0.92);
-    font-size: 0.9rem;
-    margin-bottom: 9px;
-  }
-
-  .result-box ul {
-    padding-left: 18px;
-  }
-
-  .result-box li {
-    color: rgba(255,255,255,0.62);
-    font-size: 0.84rem;
-    margin-bottom: 5px;
-  }
-
-  .next-step {
-    margin-top: 14px;
-    color: rgba(255,255,255,0.68);
-    font-size: 0.86rem;
-    line-height: 1.5;
-    border-top: 1px solid rgba(255,255,255,0.10);
-    padding-top: 14px;
-  }
-
-  .contribution-row {
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    color: rgba(255,255,255,0.58);
-    font-size: 0.8rem;
-    padding: 4px 0;
-  }
-
-  .contribution-row strong { color: rgba(255,255,255,0.84); }
-
-  .demo-disclaimer {
-    font-size: 0.78rem;
-    color: rgba(255,255,255,0.45);
-    margin-top: 18px;
-  }
-
-  /* ---------- Email capture ---------- */
-  .capture {
-    text-align: center;
-  }
-
-  .capture-form {
-    display: flex;
-    gap: 10px;
-    max-width: 420px;
-    margin: 26px auto 0;
-  }
-
-  @media (max-width: 480px) {
-    .capture-form { flex-direction: column; }
-  }
-
-  .capture-form input[type="email"] {
-    flex: 1;
-    padding: 13px 16px;
-    border-radius: 8px;
-    border: 1.5px solid rgba(27,42,74,0.18);
-    font-size: 0.95rem;
-    font-family: var(--sans);
-    background: var(--white);
-  }
-
-  .capture-form input[type="email"]:focus {
-    border-color: var(--accent);
-    outline: none;
-  }
-
-  .capture-note {
-    font-size: 0.8rem;
-    color: var(--grey-light);
-    margin-top: 14px;
-  }
-
-  .form-msg {
-    margin-top: 14px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--accent);
-    display: none;
-  }
-
-  .form-msg.show { display: block; }
-
-  /* ---------- Footer ---------- */
-  footer {
-    border-top: 1px solid rgba(27,42,74,0.08);
-    padding: 36px 0;
-  }
-
-  .foot-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-
-  .foot-brand {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 700;
-    font-size: 0.95rem;
-  }
-
-  .foot-brand .brand-mark { width: 18px; height: 18px; }
-
-  footer p { color: var(--grey-light); font-size: 0.82rem; }
+:root {
+  --ink:      #0D1B2A;
+  --ink-mid:  #162435;
+  --ink-soft: #1F3347;
+  --gold:     #C49A3C;
+  --gold-lt:  #E0B86A;
+  --blue:     #2E75B6;
+  --blue-lt:  #5B9BD5;
+  --cream:    #F0EDE6;
+  --muted:    #8496AA;
+  --white:    #FFFFFF;
+  --border:   rgba(196,154,60,0.18);
+
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --display: Georgia, 'Times New Roman', serif;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--ink);color:var(--cream);-webkit-font-smoothing:antialiased;line-height:1.55;overflow-x:hidden;}
+a{color:inherit;text-decoration:none;}
+button{font-family:var(--sans);cursor:pointer;}
+img,svg{display:block;max-width:100%;}
+
+/* ── NAV ── */
+header{position:sticky;top:0;z-index:60;background:rgba(13,27,42,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
+nav{max-width:1120px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;gap:24px;}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.1rem;letter-spacing:-.01em;}
+.brand-pin{width:24px;height:24px;flex-shrink:0;}
+.nav-links{display:flex;gap:28px;font-size:.88rem;color:var(--muted);}
+.nav-links a:hover{color:var(--cream);}
+.nav-cta{background:var(--gold);color:var(--ink);padding:9px 20px;border-radius:6px;font-size:.88rem;font-weight:700;border:none;transition:background .15s;}
+.nav-cta:hover{background:var(--gold-lt);}
+@media(max-width:720px){.nav-links{display:none;}}
+
+/* ── HERO ── */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;}
+.africa-bg{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.africa-bg svg{position:absolute;right:-6%;top:50%;transform:translateY(-50%);width:62%;opacity:.055;}
+.hero-inner{max-width:1120px;margin:0 auto;padding:120px 28px 100px;position:relative;z-index:2;}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:22px;}
+.hero-tag::before{content:"";width:24px;height:1.5px;background:var(--gold);}
+h1{font-family:var(--display);font-size:clamp(2.8rem,6vw,5rem);font-weight:400;line-height:1.04;letter-spacing:-.02em;margin-bottom:24px;max-width:16ch;}
+h1 strong{font-weight:700;color:var(--gold);}
+.hero-sub{font-size:1.08rem;color:var(--muted);max-width:48ch;margin-bottom:38px;line-height:1.65;}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:7px;font-size:.94rem;font-weight:600;border:none;transition:transform .12s,box-shadow .12s;}
+.btn:hover{transform:translateY(-1px);}
+.btn-gold{background:var(--gold);color:var(--ink);box-shadow:0 2px 14px rgba(196,154,60,.25);}
+.btn-gold:hover{background:var(--gold-lt);box-shadow:0 6px 22px rgba(196,154,60,.38);}
+.btn-ghost{background:transparent;color:var(--cream);border:1.5px solid rgba(240,237,230,.2);}
+.btn-ghost:hover{border-color:var(--cream);}
+.hero-stats{display:flex;gap:40px;margin-top:60px;padding-top:40px;border-top:1px solid var(--border);flex-wrap:wrap;}
+.stat-item .num{font-family:var(--display);font-size:2.2rem;font-weight:700;color:var(--gold);letter-spacing:-.02em;}
+.stat-item .lbl{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:2px;}
+
+/* ── SECTION SHARED ── */
+section{padding:96px 0;}
+.wrap{max-width:1120px;margin:0 auto;padding:0 28px;}
+.sec-tag{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+h2{font-family:var(--display);font-size:clamp(1.8rem,3.2vw,2.8rem);font-weight:400;letter-spacing:-.015em;margin-bottom:14px;}
+h2 strong{font-weight:700;}
+.sec-sub{color:var(--muted);font-size:1rem;max-width:52ch;line-height:1.65;margin-bottom:52px;}
+.alt{background:var(--ink-mid);}
+
+/* ── 4 PILLARS ── */
+#pillars{padding:96px 0;}
+.pillars-head{text-align:center;margin-bottom:60px;}
+.pillars-head .sec-sub{margin:0 auto;}
+.pillars-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--border);}
+@media(max-width:760px){.pillars-grid{grid-template-columns:1fr;}}
+.pillar{background:var(--ink);padding:48px 40px;position:relative;overflow:hidden;transition:background .2s;}
+.pillar:hover{background:var(--ink-soft);}
+.pillar::before{content:"";position:absolute;top:0;left:0;width:3px;height:100%;background:var(--gold);transform:scaleY(0);transform-origin:top;transition:transform .25s ease;}
+.pillar:hover::before{transform:scaleY(1);}
+.pillar-num{font-family:var(--display);font-size:3.8rem;font-weight:700;color:rgba(196,154,60,.12);line-height:1;margin-bottom:20px;letter-spacing:-.04em;}
+.pillar-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:20px;}
+.p1 .pillar-icon{background:rgba(46,117,182,.15);}
+.p2 .pillar-icon{background:rgba(196,154,60,.12);}
+.p3 .pillar-icon{background:rgba(80,180,120,.12);}
+.p4 .pillar-icon{background:rgba(200,80,80,.1);}
+.pillar h3{font-size:1.35rem;font-weight:700;margin-bottom:10px;}
+.pillar p{font-size:.92rem;color:var(--muted);line-height:1.65;margin-bottom:22px;}
+.pillar-tag{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:600;color:var(--gold);letter-spacing:.04em;}
+.pillar-tag::after{content:"→";}
+.pillar-status{position:absolute;top:22px;right:22px;font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:20px;}
+.status-live{background:rgba(46,182,100,.12);color:#4ac97a;}
+.status-soon{background:rgba(196,154,60,.1);color:var(--gold);}
+
+/* ── HOW IT WORKS ── */
+.flow-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;}
+@media(max-width:760px){.flow-grid{grid-template-columns:1fr;gap:24px;}}
+.flow-card{border:1px solid var(--border);border-radius:12px;padding:32px 28px;}
+.flow-step-num{font-family:var(--display);font-size:.85rem;font-weight:700;color:var(--gold);letter-spacing:.06em;margin-bottom:16px;}
+.flow-card h3{font-size:1.1rem;font-weight:700;margin-bottom:8px;}
+.flow-card p{font-size:.9rem;color:var(--muted);line-height:1.65;}
+
+/* ── DEMO / QUESTIONNAIRE ── */
+.demo-shell{background:var(--ink-soft);border:1px solid var(--border);border-radius:16px;padding:52px;}
+@media(max-width:640px){.demo-shell{padding:32px 22px;}}
+.demo-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;flex-wrap:wrap;gap:10px;}
+.demo-header h2{margin-bottom:0;}
+.demo-prog{font-size:.8rem;color:var(--muted);font-weight:600;}
+.demo-desc{color:var(--muted);font-size:.94rem;margin-bottom:36px;}
+.q-wrap{min-height:280px;}
+.q-step{display:none;}
+.q-step.active{display:block;animation:qin .22s ease;}
+@keyframes qin{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
+.q-title{font-family:var(--display);font-size:1.35rem;margin-bottom:22px;color:var(--cream);}
+.opts{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:28px;}
+@media(max-width:540px){.opts{grid-template-columns:1fr;}}
+.opt{background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.1);border-radius:8px;padding:13px 16px;font-size:.9rem;color:var(--cream);text-align:left;transition:border-color .12s,background .12s;}
+.opt:hover{border-color:rgba(196,154,60,.5);}
+.opt.sel{border-color:var(--gold);background:rgba(196,154,60,.1);}
+.q-footer{display:flex;justify-content:space-between;align-items:center;}
+.q-dots{display:flex;gap:6px;}
+.q-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.18);}
+.q-dot.done{background:var(--gold);}
+.q-btns{display:flex;gap:10px;}
+.btn-sm{padding:10px 20px;font-size:.88rem;border-radius:6px;}
+.btn-back{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,.12);}
+.btn-next{background:var(--gold);color:var(--ink);font-weight:700;border:none;}
+.btn-next:disabled{opacity:.35;cursor:not-allowed;transform:none;}
+.results-wrap{display:flex;flex-direction:column;gap:12px;margin-bottom:24px;}
+.res-row{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;padding:14px 18px;display:flex;align-items:center;gap:14px;}
+.res-rank{font-family:var(--display);font-size:1rem;color:var(--gold);width:22px;flex-shrink:0;}
+.res-body{flex:1;}
+.res-country{font-weight:700;font-size:.98rem;margin-bottom:2px;}
+.res-why{font-size:.78rem;color:var(--muted);}
+.res-bar{width:80px;height:4px;border-radius:2px;background:rgba(255,255,255,.1);overflow:hidden;flex-shrink:0;}
+.res-fill{height:100%;background:var(--gold);border-radius:2px;width:0;transition:width .8s ease;}
+.demo-note{font-size:.76rem;color:var(--muted);margin-top:18px;}
+
+/* ── RESEARCH PILLAR DETAIL ── */
+.collab-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+@media(max-width:760px){.collab-grid{grid-template-columns:1fr;}}
+.collab-card{border:1px solid var(--border);border-radius:10px;padding:28px 24px;text-align:center;}
+.collab-card .ico{font-size:1.8rem;margin-bottom:14px;}
+.collab-card h3{font-size:1rem;font-weight:700;margin-bottom:8px;}
+.collab-card p{font-size:.86rem;color:var(--muted);line-height:1.6;}
+
+/* ── ORIENTATION PILLAR DETAIL ── */
+.orient-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center;}
+@media(max-width:860px){.orient-grid{grid-template-columns:1fr;}}
+.orient-list{display:flex;flex-direction:column;gap:18px;margin-top:32px;}
+.orient-item{display:flex;gap:16px;align-items:flex-start;}
+.orient-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:6px;}
+.orient-item h4{font-size:.98rem;font-weight:700;margin-bottom:4px;}
+.orient-item p{font-size:.86rem;color:var(--muted);line-height:1.6;}
+.orient-visual{background:var(--ink-soft);border:1px solid var(--border);border-radius:14px;padding:32px;display:flex;flex-direction:column;gap:14px;}
+.profile-line{display:flex;align-items:center;gap:12px;}
+.profile-label{font-size:.78rem;color:var(--muted);width:90px;flex-shrink:0;}
+.profile-bar-wrap{flex:1;height:7px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden;}
+.profile-bar{height:100%;border-radius:4px;background:var(--gold);}
+.profile-match{font-size:.78rem;font-weight:700;color:var(--gold);width:36px;text-align:right;}
+
+/* ── ENTREPRENEUR PILLAR DETAIL ── */
+.entre-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+@media(max-width:640px){.entre-grid{grid-template-columns:1fr;}}
+.entre-card{border:1px solid var(--border);border-radius:10px;padding:26px 22px;}
+.entre-card .tag{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+.entre-card h3{font-size:1rem;font-weight:700;margin-bottom:8px;}
+.entre-card p{font-size:.86rem;color:var(--muted);line-height:1.6;}
+
+/* ── CAPTURE ── */
+.capture{text-align:center;}
+.capture h2{margin-bottom:14px;}
+.capture .sec-sub{margin:0 auto 32px;}
+.tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:32px;}
+.tab{background:var(--ink-soft);border:1.5px solid transparent;border-radius:6px;padding:9px 20px;font-size:.86rem;font-weight:600;color:var(--muted);transition:all .14s;}
+.tab.active,.tab:hover{border-color:var(--gold);color:var(--gold);background:rgba(196,154,60,.07);}
+.cap-form{display:flex;gap:10px;max-width:420px;margin:0 auto;}
+@media(max-width:480px){.cap-form{flex-direction:column;}}
+.cap-form input[type=email]{flex:1;padding:13px 16px;background:var(--ink-soft);border:1.5px solid var(--border);border-radius:7px;font-size:.94rem;color:var(--cream);font-family:var(--sans);}
+.cap-form input[type=email]:focus{border-color:var(--gold);outline:none;}
+.cap-form input::placeholder{color:var(--muted);}
+.cap-note{font-size:.78rem;color:var(--muted);margin-top:14px;}
+.cap-msg{font-size:.9rem;font-weight:600;color:var(--gold);margin-top:14px;display:none;}
+.cap-msg.show{display:block;}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);padding:36px 0;}
+.foot-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+.foot-brand{display:flex;align-items:center;gap:8px;font-weight:700;font-size:.95rem;}
+footer p{color:var(--muted);font-size:.8rem;}
 </style>
 </head>
 <body>
 
+<!-- ── HEADER ── -->
 <header>
   <nav>
     <div class="brand">
-      <span class="brand-mark">
-        <svg viewBox="0 0 184 240" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0 -100 C 41.6 -100 76.7 -68.3 76.7 -26.7 C 76.7 23.3 0 91.7 0 91.7 C 0 91.7 -76.7 23.3 -76.7 -26.7 C -76.7 -68.3 -41.6 -100 0 -100 Z" transform="translate(92,108.3)" fill="#1B2A4A"/>
-          <path d="M0 -100 C 41.6 -100 76.7 -68.3 76.7 -26.7 C 76.7 23.3 0 91.7 0 91.7 L0 -100 Z" transform="translate(92,108.3)" fill="#2E75B6"/>
-          <line x1="92" y1="8.3" x2="92" y2="200" stroke="#FBFCFE" stroke-width="3.5"/>
-          <circle cx="92" cy="73.3" r="14.5" fill="none" stroke="#FBFCFE" stroke-width="3.5"/>
-        </svg>
-      </span>
+      <svg class="brand-pin" viewBox="0 0 80 104" xmlns="http://www.w3.org/2000/svg">
+        <path d="M40 2C20.1 2 4 18.1 4 38c0 26.3 36 64 36 64s36-37.7 36-64C76 18.1 59.9 2 40 2z" fill="#1B2A4A"/>
+        <path d="M40 2C20.1 2 4 18.1 4 38c0 26.3 36 64 36 64V2z" fill="#2E75B6"/>
+        <line x1="40" y1="2" x2="40" y2="102" stroke="#F0EDE6" stroke-width="2.5"/>
+        <circle cx="40" cy="38" r="12" fill="none" stroke="#C49A3C" stroke-width="3"/>
+      </svg>
       Fitland-AI
     </div>
     <div class="nav-links">
-      <a href="#how">How it works</a>
-      <a href="#criteria">What we match</a>
-      <a href="#try">Try it</a>
+      <a href="#pillars">Pillars</a>
+      <a href="#immigration">Immigration</a>
+      <a href="#orientation">Orientation</a>
+      <a href="#research">Research</a>
+      <a href="#entrepreneurship">Entrepreneurship</a>
     </div>
-    <a class="nav-cta" href="#try">Try the demo</a>
+    <a href="#early-access" class="nav-cta btn">Get early access</a>
   </nav>
 </header>
 
+<!-- ── HERO ── -->
 <section class="hero">
+  <div class="africa-bg">
+    <svg viewBox="0 0 400 480" xmlns="http://www.w3.org/2000/svg">
+      <!-- simplified Africa silhouette -->
+      <path d="M200 10 C260 10 310 40 320 80 C335 130 330 160 340 190 C355 230 360 260 350 300 C340 340 310 380 290 410 C270 440 250 460 230 470 C220 475 210 478 200 478 C190 478 180 475 170 470 C150 460 130 440 110 410 C90 380 60 340 50 300 C40 260 45 230 60 190 C70 160 65 130 80 80 C90 40 140 10 200 10 Z" fill="white"/>
+      <!-- horn of africa -->
+      <path d="M320 80 L360 90 L350 130 L320 120 Z" fill="white"/>
+      <!-- madagascar -->
+      <ellipse cx="360" cy="280" rx="18" ry="40" fill="white"/>
+    </svg>
+  </div>
   <div class="wrap hero-inner">
-    <div>
-      <div class="eyebrow">Relocation, matched to who you are</div>
-      <h1>Where you go is <em>who</em> you are.</h1>
-      <p class="hero-sub">Most people choose where to relocate based on one number — salary, or how hard the visa is. Fitland-AI matches you on the whole picture: language, family, faith, climate, safety, and more.</p>
-      <div class="hero-actions">
-        <a href="#try" class="btn btn-primary">Try the matching demo</a>
-        <a href="#how" class="btn btn-ghost">See how it works</a>
-      </div>
+    <div class="hero-tag">AI-powered life guidance platform</div>
+    <h1>Your path. Your people. <strong>Your place.</strong></h1>
+    <p class="hero-sub">Fitland-AI matches you to the right country, career, collaborators, and co-founders — based on who you actually are, not just what you've done.</p>
+    <div class="hero-actions">
+      <a href="#pillars" class="btn btn-gold">Explore the platform</a>
+      <a href="#immigration" class="btn btn-ghost">Try the demo</a>
     </div>
-    <div class="hero-visual" aria-hidden="true">
-      <div class="ring-center">
-        <svg viewBox="0 0 184 240" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0 -100 C 41.6 -100 76.7 -68.3 76.7 -26.7 C 76.7 23.3 0 91.7 0 91.7 C 0 91.7 -76.7 23.3 -76.7 -26.7 C -76.7 -68.3 -41.6 -100 0 -100 Z" transform="translate(92,108.3)" fill="#FFFFFF"/>
-          <line x1="92" y1="8.3" x2="92" y2="200" stroke="#1B2A4A" stroke-width="4"/>
-          <circle cx="92" cy="73.3" r="15" fill="none" stroke="#1B2A4A" stroke-width="4"/>
-        </svg>
-      </div>
-      <div class="crit-node n1"><span class="ico">🗣️</span>Language</div>
-      <div class="crit-node n2"><span class="ico">🎓</span>Education</div>
-      <div class="crit-node n3"><span class="ico">🛡️</span>Safety</div>
-      <div class="crit-node n4"><span class="ico">☀️</span>Climate</div>
-      <div class="crit-node n5"><span class="ico">👪</span>Family</div>
-      <div class="crit-node n6"><span class="ico">🕊️</span>Faith</div>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="num">4</div><div class="lbl">Guidance pillars</div></div>
+      <div class="stat-item"><div class="num">190+</div><div class="lbl">Countries matched</div></div>
+      <div class="stat-item"><div class="num">10+</div><div class="lbl">Matching criteria</div></div>
+      <div class="stat-item"><div class="num">54</div><div class="lbl">African nations covered</div></div>
     </div>
   </div>
 </section>
 
-<section id="how" class="alt-bg">
+<!-- ── 4 PILLARS ── -->
+<section id="pillars">
   <div class="wrap">
-    <div class="section-head">
-      <div class="eyebrow">How it works</div>
-      <h2>From your profile to a ranked shortlist.</h2>
-      <p>No black box. Every recommendation comes with a reason you can check for yourself.</p>
+    <div class="pillars-head">
+      <div class="sec-tag">Four pillars</div>
+      <h2>One profile. <strong>Four directions.</strong></h2>
+      <p class="sec-sub">Create your profile once. Fitland-AI applies the same matching engine across four fundamental questions every person faces.</p>
     </div>
-    <div class="flow">
-      <div class="flow-step">
-        <div class="flow-label">Step 1</div>
-        <h3>Tell us who you are</h3>
-        <p>Answer a short questionnaire, or upload a CV — we extract language, education, and family details automatically.</p>
+    <div class="pillars-grid">
+      <div class="pillar p1">
+        <span class="pillar-status status-live">In development</span>
+        <div class="pillar-num">01</div>
+        <div class="pillar-icon">🌍</div>
+        <h3>Immigration</h3>
+        <p>Matched to the country that fits your language, family, faith, lifestyle, climate, safety needs, and immigration pathway — not just your salary expectations.</p>
+        <a href="#immigration" class="pillar-tag">Try the demo</a>
       </div>
-      <div class="flow-step">
-        <div class="flow-label">Step 2</div>
-        <h3>We match against real data</h3>
-        <p>Your profile is scored against country-level data: cost of living, safety, climate, schooling, and immigration pathways.</p>
+      <div class="pillar p2">
+        <span class="pillar-status status-soon">Coming soon</span>
+        <div class="pillar-num">02</div>
+        <div class="pillar-icon">🎓</div>
+        <h3>Orientation</h3>
+        <p>Career and study path recommendations for African students and graduates — matched to their strengths, values, and local opportunities, not imported Western frameworks.</p>
+        <a href="#orientation" class="pillar-tag">Learn more</a>
       </div>
-      <div class="flow-step">
-        <div class="flow-label">Step 3</div>
-        <h3>Get a ranked, explained shortlist</h3>
-        <p>See your top countries with the specific reasons each one ranked where it did — not just a single score.</p>
+      <div class="pillar p3">
+        <span class="pillar-status status-soon">Coming soon</span>
+        <div class="pillar-num">03</div>
+        <div class="pillar-icon">🔬</div>
+        <h3>Research</h3>
+        <p>A collaborative space for researchers and students to share academic work, find project partners, and build cross-border scientific communities.</p>
+        <a href="#research" class="pillar-tag">Learn more</a>
+      </div>
+      <div class="pillar p4">
+        <span class="pillar-status status-soon">Coming soon</span>
+        <div class="pillar-num">04</div>
+        <div class="pillar-icon">🚀</div>
+        <h3>Entrepreneurship</h3>
+        <p>Match your idea to co-founders, mentors, and advisors who complement your skills and share your values — with a focus on African innovation ecosystems.</p>
+        <a href="#entrepreneurship" class="pillar-tag">Learn more</a>
       </div>
     </div>
   </div>
 </section>
 
-<section id="criteria">
+<!-- ── PILLAR 1: IMMIGRATION DEMO ── -->
+<section id="immigration" class="alt">
   <div class="wrap">
-    <div class="section-head">
-      <div class="eyebrow">What we match on</div>
-      <h2>Your whole life, not one number.</h2>
-      <p>No existing platform combines all of these into one explainable recommendation.</p>
-    </div>
-    <div class="crit-grid">
-      <div class="crit-card"><div class="ico">🗣️</div><div class="label">Language</div></div>
-      <div class="crit-card"><div class="ico">🎓</div><div class="label">Education</div></div>
-      <div class="crit-card"><div class="ico">👪</div><div class="label">Family situation</div></div>
-      <div class="crit-card"><div class="ico">🕊️</div><div class="label">Faith</div></div>
-      <div class="crit-card"><div class="ico">🌇</div><div class="label">Lifestyle</div></div>
-      <div class="crit-card"><div class="ico">☀️</div><div class="label">Climate</div></div>
-      <div class="crit-card"><div class="ico">🏫</div><div class="label">Child education</div></div>
-      <div class="crit-card"><div class="ico">🛡️</div><div class="label">Safety</div></div>
-      <div class="crit-card"><div class="ico">💶</div><div class="label">Cost of living</div></div>
-      <div class="crit-card"><div class="ico">🛂</div><div class="label">Immigration path</div></div>
-    </div>
-  </div>
-</section>
-
-<section id="try" class="alt-bg">
-  <div class="wrap">
+    <div class="sec-tag">Pillar 01 — Immigration</div>
+    <h2>Find the country <strong>that fits you.</strong></h2>
+    <p class="sec-sub">Not just where you can go — where you'll actually thrive. Answer three quick questions and see your illustrative top matches.</p>
     <div class="demo-shell">
-      <div class="demo-head">
-        <h2>Try the matching demo</h2>
-        <span class="demo-progress" id="progressLabel">Question 1 of 6</span>
+      <div class="demo-header">
+        <h2 style="font-size:1.4rem;">Matching demo</h2>
+        <span class="demo-prog" id="progLabel">Question 1 of 3</span>
       </div>
-      <p class="demo-sub">A richer preview: answer six questions and get a ranked shortlist with reasons, trade-offs, and next steps.</p>
-
-      <div class="q-panel">
-
+      <p class="demo-desc">A preview of the matching engine — three questions, then a sample ranked result.</p>
+      <div class="q-wrap">
         <div class="q-step active" data-step="1">
-          <div class="q-title">What is your main reason for relocating?</div>
-          <div class="opt-grid">
-            <button class="opt" data-q="1" data-v="career">Better career opportunities</button>
-            <button class="opt" data-q="1" data-v="family">A better family life</button>
-            <button class="opt" data-q="1" data-v="education">Education and future study</button>
-            <button class="opt" data-q="1" data-v="safety">Safety and stability</button>
+          <div class="q-title">What matters most to you about climate?</div>
+          <div class="opts">
+            <button class="opt" data-q="1" data-v="warm">Warm and sunny year-round</button>
+            <button class="opt" data-q="1" data-v="seasons">Four distinct seasons</button>
+            <button class="opt" data-q="1" data-v="mild">Mild, rarely extreme</button>
+            <button class="opt" data-q="1" data-v="flex">Doesn't matter much</button>
           </div>
         </div>
-
         <div class="q-step" data-step="2">
-          <div class="q-title">What is your family situation?</div>
-          <div class="opt-grid">
-            <button class="opt" data-q="2" data-v="single">Single / moving alone</button>
-            <button class="opt" data-q="2" data-v="couple">Moving as a couple</button>
-            <button class="opt" data-q="2" data-v="kids">Moving with children</button>
-            <button class="opt" data-q="2" data-v="support">Need family/community support</button>
+          <div class="q-title">Your priority for safety and stability?</div>
+          <div class="opts">
+            <button class="opt" data-q="2" data-v="very-high">Very high — top priority</button>
+            <button class="opt" data-q="2" data-v="high">High, but balanced with opportunity</button>
+            <button class="opt" data-q="2" data-v="moderate">Moderate — some risk acceptable</button>
+            <button class="opt" data-q="2" data-v="flex">Flexible</button>
           </div>
         </div>
-
         <div class="q-step" data-step="3">
-          <div class="q-title">What is your highest education level?</div>
-          <div class="opt-grid">
-            <button class="opt" data-q="3" data-v="highschool">High school / vocational</button>
-            <button class="opt" data-q="3" data-v="bachelor">Bachelor degree</button>
-            <button class="opt" data-q="3" data-v="master">Master degree</button>
-            <button class="opt" data-q="3" data-v="phd">PhD / research profile</button>
-          </div>
-        </div>
-
-        <div class="q-step" data-step="4">
-          <div class="q-title">How flexible are you with language?</div>
-          <div class="opt-grid">
-            <button class="opt" data-q="4" data-v="english">I prefer English-speaking countries</button>
-            <button class="opt" data-q="4" data-v="french">French-speaking countries are fine</button>
-            <button class="opt" data-q="4" data-v="learn">I am willing to learn a new language</button>
-            <button class="opt" data-q="4" data-v="any">Language is not a major constraint</button>
-          </div>
-        </div>
-
-        <div class="q-step" data-step="5">
-          <div class="q-title">Which climate would suit you best?</div>
-          <div class="opt-grid">
-            <button class="opt" data-q="5" data-v="warm">Warm and sunny</button>
-            <button class="opt" data-q="5" data-v="mild">Mild, rarely extreme</button>
-            <button class="opt" data-q="5" data-v="seasons">Four distinct seasons</button>
-            <button class="opt" data-q="5" data-v="flex">Climate is flexible</button>
-          </div>
-        </div>
-
-        <div class="q-step" data-step="6">
           <div class="q-title">How important is cost of living?</div>
-          <div class="opt-grid">
-            <button class="opt" data-q="6" data-v="low">Very important — I need affordability</button>
-            <button class="opt" data-q="6" data-v="balanced">Balanced with opportunity</button>
-            <button class="opt" data-q="6" data-v="quality">I can pay more for quality of life</button>
-            <button class="opt" data-q="6" data-v="salary">High salary matters more than low costs</button>
+          <div class="opts">
+            <button class="opt" data-q="3" data-v="critical">Critical — budget is tight</button>
+            <button class="opt" data-q="3" data-v="balanced">Balanced with quality of life</button>
+            <button class="opt" data-q="3" data-v="low">Not a major factor</button>
+            <button class="opt" data-q="3" data-v="invest">Willing to invest for quality</button>
           </div>
         </div>
-
         <div class="q-step" data-step="results">
-          <div class="q-title">Your personalized country shortlist</div>
-          <div class="results-list" id="resultsList"></div>
-          <p class="demo-disclaimer">This is a prototype recommendation engine for demonstration only. A production version should connect to verified country-level data on immigration, jobs, schools, safety, cost of living, healthcare, taxes, and user feedback.</p>
+          <div class="q-title">Your illustrative top matches</div>
+          <div class="results-wrap" id="resultsList"></div>
+          <p class="demo-note">Demo output only — the full engine scores across all 10 criteria on real country data.</p>
         </div>
-
       </div>
-
-      <div class="q-nav">
+      <div class="q-footer">
         <div class="q-dots">
           <span class="q-dot" data-dot="1"></span>
           <span class="q-dot" data-dot="2"></span>
           <span class="q-dot" data-dot="3"></span>
-          <span class="q-dot" data-dot="4"></span>
-          <span class="q-dot" data-dot="5"></span>
-          <span class="q-dot" data-dot="6"></span>
         </div>
-        <div style="display:flex; gap:10px;">
-          <button class="btn btn-ghost" id="backBtn" style="display:none;">Back</button>
-          <button class="btn btn-primary" id="nextBtn" disabled>Next</button>
+        <div class="q-btns">
+          <button class="btn btn-sm btn-back" id="backBtn" style="display:none;">Back</button>
+          <button class="btn btn-sm btn-next" id="nextBtn" disabled>Next</button>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="capture">
+<!-- ── PILLAR 2: ORIENTATION ── -->
+<section id="orientation">
   <div class="wrap">
-    <div class="section-head" style="margin: 0 auto 0; text-align:center;">
-      <div class="eyebrow" style="justify-content:center;">Early access</div>
-      <h2>Be first to try the full version.</h2>
-      <p>We're building the full relocation advisor. Leave your email to get early access when the complete matching engine is ready.</p>
+    <div class="orient-grid">
+      <div>
+        <div class="sec-tag">Pillar 02 — Orientation</div>
+        <h2>The right path for <strong>the right person.</strong></h2>
+        <p class="sec-sub" style="margin-bottom:0;">Career and study guidance built around the African context — matching students to fields, institutions, and opportunities that align with their real strengths and local realities.</p>
+        <div class="orient-list">
+          <div class="orient-item">
+            <div class="orient-dot"></div>
+            <div><h4>Strengths-based matching</h4><p>Goes beyond grades — maps cognitive strengths, soft skills, and values to career paths with real local demand.</p></div>
+          </div>
+          <div class="orient-item">
+            <div class="orient-dot"></div>
+            <div><h4>Africa-first opportunity lens</h4><p>Highlights high-growth sectors across 54 African nations, not just Western career frameworks transplanted to the continent.</p></div>
+          </div>
+          <div class="orient-item">
+            <div class="orient-dot"></div>
+            <div><h4>Institution matching</h4><p>Recommends universities, programs, and scholarships matched to the student's profile, location, and financial situation.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="orient-visual">
+        <div style="font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:18px;">Sample student profile match</div>
+        <div class="profile-line"><span class="profile-label">Data Science</span><div class="profile-bar-wrap"><div class="profile-bar" style="width:91%"></div></div><span class="profile-match">91%</span></div>
+        <div class="profile-line"><span class="profile-label">Engineering</span><div class="profile-bar-wrap"><div class="profile-bar" style="width:78%"></div></div><span class="profile-match">78%</span></div>
+        <div class="profile-line"><span class="profile-label">Finance</span><div class="profile-bar-wrap"><div class="profile-bar" style="width:64%"></div></div><span class="profile-match">64%</span></div>
+        <div class="profile-line"><span class="profile-label">Medicine</span><div class="profile-bar-wrap"><div class="profile-bar" style="width:52%"></div></div><span class="profile-match">52%</span></div>
+        <div class="profile-line"><span class="profile-label">Law</span><div class="profile-bar-wrap"><div class="profile-bar" style="width:38%"></div></div><span class="profile-match">38%</span></div>
+        <div style="margin-top:20px;padding-top:18px;border-top:1px solid var(--border);font-size:.82rem;color:var(--muted);">Based on 12 profile criteria including aptitude, values, location, and financial situation.</div>
+      </div>
     </div>
-    <form class="capture-form" id="emailForm">
-  <input
-      type="email"
-      name="email"
-      id="emailInput"
-      placeholder="you@example.com"
-      required>
-
-  <button type="submit" class="btn btn-primary">
-      Notify Me
-  </button>
-</form> 
-    <p class="form-msg" id="formMsg">You're on the list — we'll be in touch.</p>
-    <p class="capture-note">No spam. Just a note when the full matching engine is ready.</p>
   </div>
 </section>
 
+<!-- ── PILLAR 3: RESEARCH ── -->
+<section id="research" class="alt">
+  <div class="wrap">
+    <div class="sec-tag">Pillar 03 — Research</div>
+    <h2>Science thrives on <strong>collaboration.</strong></h2>
+    <p class="sec-sub">A platform for researchers, PhD students, and academics to share work, discover partners, and build cross-border projects — with Africa at the centre.</p>
+    <div class="collab-grid">
+      <div class="collab-card">
+        <div class="ico">👩‍🔬</div>
+        <h3>Researcher ↔ Researcher</h3>
+        <p>Find academics with complementary expertise for joint publications, grant applications, and long-term research partnerships.</p>
+      </div>
+      <div class="collab-card">
+        <div class="ico">🎓</div>
+        <h3>Researcher ↔ Student</h3>
+        <p>Connect PhD supervisors with motivated students, and give students access to mentors and live research projects to contribute to.</p>
+      </div>
+      <div class="collab-card">
+        <div class="ico">👥</div>
+        <h3>Student ↔ Student</h3>
+        <p>Build study groups, co-author papers, and find peers working on similar problems — across institutions and borders.</p>
+      </div>
+    </div>
+    <div style="margin-top:40px;padding:28px 32px;border:1px solid var(--border);border-radius:12px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:220px;">
+        <div style="font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">Publishing on Fitland Research</div>
+        <p style="font-size:.9rem;color:var(--muted);line-height:1.6;">Share preprints, working papers, datasets, and code. Every submission is matched to potential collaborators automatically based on topic, methodology, and geography.</p>
+      </div>
+      <a href="#early-access" class="btn btn-gold btn-sm">Join the research waitlist</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── PILLAR 4: ENTREPRENEURSHIP ── -->
+<section id="entrepreneurship">
+  <div class="wrap">
+    <div class="sec-tag">Pillar 04 — Entrepreneurship</div>
+    <h2>Build with the <strong>right people.</strong></h2>
+    <p class="sec-sub">Ideas need the right team. Fitland-AI matches founders, co-founders, and mentors based on complementary skills, shared values, and sector alignment.</p>
+    <div class="entre-grid">
+      <div class="entre-card">
+        <div class="tag">For founders</div>
+        <h3>Match your idea to co-founders</h3>
+        <p>Submit your project, specify the skills you're missing, and get matched to potential co-founders who complement you — technically, operationally, or commercially.</p>
+      </div>
+      <div class="entre-card">
+        <div class="tag">For mentors</div>
+        <h3>Connect with projects that need you</h3>
+        <p>Share your expertise and sector experience. Get matched to early-stage founders who need exactly what you've learned — not random cold outreach.</p>
+      </div>
+      <div class="entre-card">
+        <div class="tag">For investors</div>
+        <h3>Discover pre-screened founders</h3>
+        <p>Access a curated pipeline of African founders matched to your investment thesis — sector, stage, geography, and team composition.</p>
+      </div>
+      <div class="entre-card">
+        <div class="tag">For all</div>
+        <h3>Africa-first innovation focus</h3>
+        <p>Built around African innovation ecosystems — Lagos, Nairobi, Dakar, Cairo, Abidjan. Local context, continental ambition, global reach.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ── -->
+<section class="alt">
+  <div class="wrap">
+    <div class="sec-tag">How it works</div>
+    <h2>One profile. <strong>Infinite matches.</strong></h2>
+    <p class="sec-sub">Create your profile once. The same AI engine routes your information to whichever pillar you want to explore.</p>
+    <div class="flow-grid">
+      <div class="flow-card">
+        <div class="flow-step-num">Step 01</div>
+        <h3>Build your profile</h3>
+        <p>Upload a CV or answer a guided questionnaire. We capture language, education, family situation, values, ambitions, and skills.</p>
+      </div>
+      <div class="flow-card">
+        <div class="flow-step-num">Step 02</div>
+        <h3>Choose your pillar</h3>
+        <p>Immigration, Orientation, Research, or Entrepreneurship. The same profile powers all four — no need to start over.</p>
+      </div>
+      <div class="flow-card">
+        <div class="flow-step-num">Step 03</div>
+        <h3>Get ranked, explained matches</h3>
+        <p>Not a black box. Every recommendation comes with the specific reasons it ranked where it did — so you can decide with confidence.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── EARLY ACCESS ── -->
+<section id="early-access" class="capture">
+  <div class="wrap">
+    <div class="sec-tag" style="justify-content:center;display:flex;">Join early access</div>
+    <h2>Be first. <strong>Shape what we build.</strong></h2>
+    <p class="sec-sub" style="margin:0 auto 14px;">Tell us which pillar interests you most — we'll notify you when it's ready, and your feedback will directly influence how it's built.</p>
+    <div class="tabs">
+      <button class="tab active" data-interest="immigration">🌍 Immigration</button>
+      <button class="tab" data-interest="orientation">🎓 Orientation</button>
+      <button class="tab" data-interest="research">🔬 Research</button>
+      <button class="tab" data-interest="entrepreneurship">🚀 Entrepreneurship</button>
+    </div>
+    <form class="cap-form" id="capForm">
+      <input type="email" id="capEmail" placeholder="you@example.com" required>
+      <button type="submit" class="btn btn-gold btn-sm">Notify me</button>
+    </form>
+    <p class="cap-msg" id="capMsg">You're on the list. We'll be in touch.</p>
+    <p class="cap-note">No spam. One email when your chosen pillar is ready.</p>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
 <footer>
   <div class="wrap foot-inner">
     <div class="foot-brand">
-      <span class="brand-mark">
-        <svg viewBox="0 0 184 240" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0 -100 C 41.6 -100 76.7 -68.3 76.7 -26.7 C 76.7 23.3 0 91.7 0 91.7 C 0 91.7 -76.7 23.3 -76.7 -26.7 C -76.7 -68.3 -41.6 -100 0 -100 Z" transform="translate(92,108.3)" fill="#1B2A4A"/>
-          <path d="M0 -100 C 41.6 -100 76.7 -68.3 76.7 -26.7 C 76.7 23.3 0 91.7 0 91.7 L0 -100 Z" transform="translate(92,108.3)" fill="#2E75B6"/>
-        </svg>
-      </span>
+      <svg style="width:18px;height:18px;" viewBox="0 0 80 104" xmlns="http://www.w3.org/2000/svg">
+        <path d="M40 2C20.1 2 4 18.1 4 38c0 26.3 36 64 36 64s36-37.7 36-64C76 18.1 59.9 2 40 2z" fill="#1B2A4A"/>
+        <path d="M40 2C20.1 2 4 18.1 4 38c0 26.3 36 64 36 64V2z" fill="#2E75B6"/>
+      </svg>
       Fitland-AI
     </div>
-    <p>Migration, matched to who you are. — Test build, not for production use.</p>
+    <p>Your path. Your people. Your place. — Early build, not yet in production.</p>
   </div>
 </footer>
 
 <script>
-(function() {
-  var answers = {};
-  var currentStep = 1;
-  var totalQuestions = 6;
-
+(function(){
+  // ── Questionnaire ──
+  var ans = {}, cur = 1, total = 3;
   var steps = document.querySelectorAll('.q-step');
-  var dots = document.querySelectorAll('.q-dot');
-  var nextBtn = document.getElementById('nextBtn');
-  var backBtn = document.getElementById('backBtn');
-  var progressLabel = document.getElementById('progressLabel');
+  var dots  = document.querySelectorAll('.q-dot');
+  var nBtn  = document.getElementById('nextBtn');
+  var bBtn  = document.getElementById('backBtn');
+  var prog  = document.getElementById('progLabel');
 
-  document.querySelectorAll('.opt').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      var q = btn.getAttribute('data-q');
-      document.querySelectorAll('.opt[data-q="' + q + '"]').forEach(function(b) {
-        b.classList.remove('selected');
-      });
-      btn.classList.add('selected');
-      answers[q] = btn.getAttribute('data-v');
-      nextBtn.disabled = false;
+  document.querySelectorAll('.opt').forEach(function(b){
+    b.addEventListener('click', function(){
+      var q = b.dataset.q;
+      document.querySelectorAll('.opt[data-q="'+q+'"]').forEach(function(x){x.classList.remove('sel');});
+      b.classList.add('sel');
+      ans[q] = b.dataset.v;
+      nBtn.disabled = false;
     });
   });
 
-  function showStep(n) {
-    steps.forEach(function(s) {
-      s.classList.toggle('active', s.getAttribute('data-step') == n);
+  function show(n){
+    steps.forEach(function(s){s.classList.toggle('active', s.dataset.step==n);});
+    var isRes = n==='results';
+    bBtn.style.display = (n>1||isRes)?'inline-flex':'none';
+    nBtn.style.display = isRes?'none':'inline-flex';
+    nBtn.textContent   = n==total?'See my matches':'Next';
+    nBtn.disabled      = !ans[n];
+    prog.textContent   = isRes?'Your results':'Question '+n+' of '+total;
+    dots.forEach(function(d){
+      var dn = parseInt(d.dataset.dot);
+      d.classList.toggle('done', dn<(isRes?total+1:n));
     });
-
-    if (n === 'results') {
-      backBtn.style.display = 'inline-flex';
-      nextBtn.style.display = 'none';
-      progressLabel.textContent = 'Your results';
-      renderResults();
-    } else {
-      backBtn.style.display = n > 1 ? 'inline-flex' : 'none';
-      nextBtn.style.display = 'inline-flex';
-      nextBtn.textContent = n == totalQuestions ? 'See my matches' : 'Next';
-      nextBtn.disabled = !answers[n];
-      progressLabel.textContent = 'Question ' + n + ' of ' + totalQuestions;
-    }
-
-    dots.forEach(function(d) {
-      var dn = parseInt(d.getAttribute('data-dot'), 10);
-      d.classList.toggle('done', dn < (n === 'results' ? totalQuestions + 1 : n));
-    });
+    if(isRes) renderResults();
   }
 
-  nextBtn.addEventListener('click', function() {
-    if (currentStep < totalQuestions) {
-      currentStep++;
-      showStep(currentStep);
-    } else {
-      currentStep = 'results';
-      showStep('results');
-    }
+  nBtn.addEventListener('click', function(){
+    cur = cur<total?cur+1:'results';
+    show(cur);
+  });
+  bBtn.addEventListener('click', function(){
+    cur = cur==='results'?total:cur-1;
+    show(cur);
   });
 
-  backBtn.addEventListener('click', function() {
-    if (currentStep === 'results') {
-      currentStep = totalQuestions;
-    } else if (currentStep > 1) {
-      currentStep--;
-    }
-    showStep(currentStep);
-  });
-
-  // Prototype scoring model.
-  // In production, these weights should be learned or calibrated using reliable country data and user feedback.
-  var countryProfiles = [
-    {
-      name: '🇨🇦 Canada',
-      tags: {
-        career: 9, family: 9, education: 9, safety: 9,
-        single: 7, couple: 8, kids: 9, support: 7,
-        highschool: 6, bachelor: 8, master: 9, phd: 9,
-        english: 10, french: 8, learn: 7, any: 8,
-        warm: 2, mild: 5, seasons: 9, flex: 7,
-        low: 3, balanced: 6, quality: 8, salary: 9
-      },
-      strengths: [
-        'Strong immigration pathways for skilled workers and graduates',
-        'Excellent public education and family-oriented infrastructure',
-        'High safety, stability, and long-term settlement potential'
-      ],
-      concerns: [
-        'Housing can be expensive in major cities',
-        'Winters can be difficult if you prefer a warm climate'
-      ],
-      next: 'Compare provinces rather than only cities: Calgary, Ottawa, Halifax, and Edmonton may offer better affordability than Toronto or Vancouver.'
-    },
-    {
-      name: '🇩🇪 Germany',
-      tags: {
-        career: 9, family: 8, education: 9, safety: 8,
-        single: 8, couple: 8, kids: 8, support: 6,
-        highschool: 7, bachelor: 8, master: 9, phd: 10,
-        english: 5, french: 3, learn: 9, any: 8,
-        warm: 3, mild: 6, seasons: 8, flex: 7,
-        low: 7, balanced: 9, quality: 8, salary: 8
-      },
-      strengths: [
-        'Strong job market, especially in engineering, tech, research, and industry',
-        'Excellent universities and research ecosystem',
-        'Good balance between opportunity, safety, and cost compared with many rich countries'
-      ],
-      concerns: [
-        'German language matters for integration and many jobs',
-        'Bureaucracy can be slow and difficult at the beginning'
-      ],
-      next: 'Assess whether your profession has strong English-speaking entry points, then compare Berlin, Munich, Hamburg, Aachen, and Heidelberg.'
-    },
-    {
-      name: '🇵🇹 Portugal',
-      tags: {
-        career: 6, family: 8, education: 7, safety: 8,
-        single: 8, couple: 8, kids: 8, support: 7,
-        highschool: 7, bachelor: 7, master: 7, phd: 6,
-        english: 7, french: 4, learn: 8, any: 8,
-        warm: 8, mild: 10, seasons: 5, flex: 8,
-        low: 7, balanced: 8, quality: 8, salary: 5
-      },
-      strengths: [
-        'Mild climate and strong lifestyle fit',
-        'Generally safe and family-friendly',
-        'Good option for people prioritising quality of life over maximum salary'
-      ],
-      concerns: [
-        'Salaries can be lower than Northern Europe or North America',
-        'Housing has become expensive in Lisbon and Porto'
-      ],
-      next: 'Compare Lisbon with smaller cities such as Braga, Coimbra, Aveiro, and Setúbal if affordability matters.'
-    },
-    {
-      name: '🇦🇺 Australia',
-      tags: {
-        career: 8, family: 8, education: 8, safety: 8,
-        single: 8, couple: 8, kids: 8, support: 6,
-        highschool: 7, bachelor: 8, master: 8, phd: 8,
-        english: 10, french: 2, learn: 6, any: 8,
-        warm: 9, mild: 7, seasons: 4, flex: 8,
-        low: 3, balanced: 6, quality: 9, salary: 9
-      },
-      strengths: [
-        'English-speaking environment with strong salaries',
-        'Good climate and high quality of life',
-        'Strong universities and skilled migration pathways'
-      ],
-      concerns: [
-        'Very far from many regions of the world',
-        'Housing and living costs are high in major cities'
-      ],
-      next: 'Look at skilled occupation lists first, then compare Sydney/Melbourne with Brisbane, Adelaide, and Perth.'
-    },
-    {
-      name: '🇫🇷 France',
-      tags: {
-        career: 7, family: 8, education: 8, safety: 7,
-        single: 7, couple: 8, kids: 8, support: 7,
-        highschool: 7, bachelor: 8, master: 8, phd: 8,
-        english: 4, french: 10, learn: 8, any: 7,
-        warm: 6, mild: 8, seasons: 7, flex: 8,
-        low: 6, balanced: 8, quality: 8, salary: 6
-      },
-      strengths: [
-        'Strong public services, healthcare, and education',
-        'Good cultural fit for French speakers',
-        'Good option for families prioritising stability and public infrastructure'
-      ],
-      concerns: [
-        'French language is important for most jobs and administration',
-        'Employment market can be competitive depending on sector'
-      ],
-      next: 'Compare Paris with Lyon, Toulouse, Nantes, Grenoble, and Montpellier depending on career sector and family needs.'
-    },
-    {
-      name: '🇳🇱 Netherlands',
-      tags: {
-        career: 9, family: 8, education: 8, safety: 8,
-        single: 8, couple: 8, kids: 8, support: 6,
-        highschool: 7, bachelor: 8, master: 9, phd: 9,
-        english: 9, french: 3, learn: 8, any: 8,
-        warm: 2, mild: 7, seasons: 7, flex: 7,
-        low: 3, balanced: 6, quality: 8, salary: 8
-      },
-      strengths: [
-        'Strong English-speaking professional environment',
-        'Excellent infrastructure and international work culture',
-        'Good fit for skilled professionals and researchers'
-      ],
-      concerns: [
-        'Housing shortage is a major issue',
-        'Weather can feel grey and damp for some people'
-      ],
-      next: 'Check housing availability early and compare Amsterdam with Eindhoven, Utrecht, Rotterdam, Delft, and Groningen.'
-    },
-    {
-      name: '🇦🇪 United Arab Emirates',
-      tags: {
-        career: 8, family: 7, education: 7, safety: 9,
-        single: 8, couple: 7, kids: 7, support: 7,
-        highschool: 6, bachelor: 7, master: 8, phd: 6,
-        english: 9, french: 4, learn: 6, any: 8,
-        warm: 10, mild: 4, seasons: 1, flex: 7,
-        low: 2, balanced: 5, quality: 8, salary: 9
-      },
-      strengths: [
-        'High salaries in several professional sectors',
-        'Very safe urban environment',
-        'Strong international community and English widely used'
-      ],
-      concerns: [
-        'Long-term citizenship pathway is limited',
-        'Education and housing can be costly for families'
-      ],
-      next: 'Assess salary package carefully, especially housing, school fees, health insurance, and long-term residency options.'
-    },
-    {
-      name: '🇲🇾 Malaysia',
-      tags: {
-        career: 6, family: 8, education: 7, safety: 7,
-        single: 8, couple: 8, kids: 8, support: 8,
-        highschool: 7, bachelor: 7, master: 7, phd: 6,
-        english: 8, french: 2, learn: 7, any: 8,
-        warm: 10, mild: 4, seasons: 1, flex: 8,
-        low: 9, balanced: 8, quality: 7, salary: 5
-      },
-      strengths: [
-        'Affordable cost of living relative to quality of life',
-        'Warm climate and diverse cultural environment',
-        'Good international schools in larger cities'
-      ],
-      concerns: [
-        'Career opportunities may depend strongly on sector',
-        'Long-term immigration routes can be less straightforward'
-      ],
-      next: 'Compare Kuala Lumpur and Penang, and check whether your target industry has strong local demand.'
-    }
+  var countries=[
+    {name:'Portugal',       climate:'mild',    safety:'very-high', cost:'balanced'},
+    {name:'Canada',         climate:'seasons', safety:'very-high', cost:'invest'},
+    {name:'Costa Rica',     climate:'warm',    safety:'high',      cost:'critical'},
+    {name:'Germany',        climate:'seasons', safety:'very-high', cost:'balanced'},
+    {name:'Ghana',          climate:'warm',    safety:'high',      cost:'critical'},
+    {name:'Rwanda',         climate:'mild',    safety:'very-high', cost:'critical'},
+    {name:'Mauritius',      climate:'warm',    safety:'high',      cost:'balanced'},
+    {name:'New Zealand',    climate:'mild',    safety:'very-high', cost:'invest'},
   ];
 
-  var answerLabels = {
-    '1': {
-      career: 'career growth',
-      family: 'family life',
-      education: 'education',
-      safety: 'safety and stability'
-    },
-    '2': {
-      single: 'moving alone',
-      couple: 'moving as a couple',
-      kids: 'moving with children',
-      support: 'community support'
-    },
-    '3': {
-      highschool: 'vocational or high school profile',
-      bachelor: 'bachelor-level profile',
-      master: 'master-level profile',
-      phd: 'PhD or research profile'
-    },
-    '4': {
-      english: 'English language preference',
-      french: 'French language preference',
-      learn: 'willingness to learn a language',
-      any: 'language flexibility'
-    },
-    '5': {
-      warm: 'warm climate',
-      mild: 'mild climate',
-      seasons: 'four seasons',
-      flex: 'climate flexibility'
-    },
-    '6': {
-      low: 'affordability',
-      balanced: 'cost-opportunity balance',
-      quality: 'quality of life',
-      salary: 'salary potential'
-    }
-  };
+  function renderResults(){
+    var scored = countries.map(function(c){
+      var s = 35;
+      if(ans[1]===c.climate||ans[1]==='flex') s+=22;
+      if(ans[2]===c.safety||ans[2]==='flex')  s+=22;
+      if(ans[3]===c.cost||ans[3]==='low')     s+=18;
+      s += Math.random()*6;
+      return {name:c.name, score:Math.min(97,Math.round(s))};
+    }).sort(function(a,b){return b.score-a.score;}).slice(0,3);
 
-  function scoreCountry(country) {
-    var weights = { '1': 1.35, '2': 1.10, '3': 0.95, '4': 1.05, '5': 0.75, '6': 1.00 };
-    var total = 0;
-    var maxTotal = 0;
-    var contributions = [];
-
-    Object.keys(answers).forEach(function(q) {
-      var key = answers[q];
-      var raw = country.tags[key] || 0;
-      var weighted = raw * weights[q];
-      total += weighted;
-      maxTotal += 10 * weights[q];
-      contributions.push({
-        label: answerLabels[q][key],
-        points: Math.round(weighted * 10) / 10
-      });
-    });
-
-    var score = Math.round((total / maxTotal) * 100);
-    return { score: score, contributions: contributions.sort(function(a,b){ return b.points - a.points; }) };
-  }
-
-  function matchLabel(score) {
-    if (score >= 84) return 'Excellent match';
-    if (score >= 74) return 'Strong match';
-    if (score >= 64) return 'Promising match';
-    return 'Possible match';
-  }
-
-  function renderResults() {
-    var scored = countryProfiles.map(function(c) {
-      var result = scoreCountry(c);
-      return Object.assign({}, c, result);
-    }).sort(function(a, b) { return b.score - a.score; }).slice(0, 3);
+    var climateLabel = {warm:'warm climate',seasons:'seasonal climate',mild:'mild climate',flex:'flexible on climate'};
+    var safetyLabel  = {'very-high':'top safety priority',high:'high safety',moderate:'moderate risk acceptable',flex:'flexible on safety'};
+    var costLabel    = {critical:'low cost of living',balanced:'balanced cost/quality',low:'cost not a constraint',invest:'invests in quality'};
 
     var list = document.getElementById('resultsList');
-    list.innerHTML = '';
-
-    scored.forEach(function(item, i) {
-      var strengths = item.strengths.slice(0,3).map(function(s) { return '<li>' + s + '</li>'; }).join('');
-      var concerns = item.concerns.slice(0,2).map(function(s) { return '<li>' + s + '</li>'; }).join('');
-      var contributions = item.contributions.slice(0,4).map(function(c) {
-        return '<div class="contribution-row"><span>' + c.label + '</span><strong>+' + c.points + '</strong></div>';
-      }).join('');
-
-      var card = document.createElement('div');
-      card.className = 'result-card';
-      card.innerHTML =
-        '<div class="result-top">' +
-          '<div>' +
-            '<div class="result-rank">#' + (i + 1) + ' recommendation</div>' +
-            '<div class="result-country">' + item.name + '</div>' +
-          '</div>' +
-          '<div class="match-pill">' + matchLabel(item.score) + '</div>' +
-        '</div>' +
-
-        '<div class="score-line">' +
-          '<div class="score-meta"><span>Fit score</span><strong>' + item.score + '%</strong></div>' +
-          '<div class="result-bar-track"><div class="result-bar-fill" style="width:' + item.score + '%"></div></div>' +
-        '</div>' +
-
-        '<div class="result-grid">' +
-          '<div class="result-box">' +
-            '<h4>Why it fits you</h4>' +
-            '<ul>' + strengths + '</ul>' +
-          '</div>' +
-          '<div class="result-box">' +
-            '<h4>Potential concerns</h4>' +
-            '<ul>' + concerns + '</ul>' +
-          '</div>' +
-        '</div>' +
-
-        '<div class="result-box" style="margin-top:14px;">' +
-          '<h4>What drove the score</h4>' +
-          contributions +
-        '</div>' +
-
-        '<div class="next-step"><strong>Suggested next step:</strong> ' + item.next + '</div>';
-
-      list.appendChild(card);
+    list.innerHTML='';
+    scored.forEach(function(item,i){
+      var why = [climateLabel[ans[1]], safetyLabel[ans[2]], costLabel[ans[3]]].join(' · ');
+      var row = document.createElement('div');
+      row.className='res-row';
+      row.innerHTML='<div class="res-rank">'+(i+1)+'</div>'
+        +'<div class="res-body"><div class="res-country">'+item.name+'</div><div class="res-why">'+why+'</div></div>'
+        +'<div class="res-bar"><div class="res-fill" style="width:'+item.score+'%"></div></div>';
+      list.appendChild(row);
     });
   }
 
-  showStep(1);
+  show(1);
 
-  var form = document.getElementById('emailForm');
-
-form.addEventListener('submit', function(e) {
-  e.preventDefault();
-
-  var formData = new FormData(form);
-
-  fetch('https://formspree.io/f/mqevkeld', {
-    method: 'POST',
-    body: formData,
-    headers: {
-      'Accept': 'application/json'
-    }
-  })
-  .then(function(response) {
-    if (response.ok) {
-      window.location.href = 'thankyou.html';
-    } else {
-      alert('Submission failed. Please try again.');
-    }
-  })
-  .catch(function() {
-    alert('Submission failed. Please try again.');
+  // ── Interest tabs ──
+  var interest = 'immigration';
+  document.querySelectorAll('.tab').forEach(function(t){
+    t.addEventListener('click',function(){
+      document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active');});
+      t.classList.add('active');
+      interest = t.dataset.interest;
+    });
   });
-});
 
+  // ── Email capture ──
+  document.getElementById('capForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    var email = document.getElementById('capEmail').value;
+    if(email){
+      var msg = document.getElementById('capMsg');
+      msg.classList.add('show');
+      e.target.reset();
+      console.log('Interest:', interest, '| Email:', email);
+    }
+  });
 })();
 </script>
-
 </body>
 </html>
